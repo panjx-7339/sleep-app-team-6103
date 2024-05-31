@@ -3,11 +3,10 @@ import React from "react";
 
 const Cat = () => {
   return (
-    <View className="place-contents-center">
+    <View>
       <Image
-        className="place-contents-center"
         source={require("../../../../assets/cat-image.png")}
-        style={{ width: 200, height: 200 }}
+        style={{ width: 500, height: 500 }}
       />
     </View>
   );

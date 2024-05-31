@@ -15,7 +15,7 @@ const SignOutButton = () => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      className="absolute top-28 m-1 right-0 w-1/3 bg-blue-200 mt-1 border-2 border-white p-1 rounded-lg"
+      className=" bg-blue-200 mt-1 border-2 border-white px-9 py-1 rounded-lg"
       onPress={handleSignOut}
     >
       <Text className="text-center">Sign out</Text>
