@@ -6,11 +6,12 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
-import Logo from "../../components/Logo"
+import Logo from "../../components/Logo";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -56,7 +57,7 @@ const LoginScreen = () => {
   return (
     <KeyboardAvoidingView
       className="h-screen flex items-center justify-center bg-blue-200"
-      behaviour="padding"
+      behavior={Platform.OS === "android" ? "height" : "padding"}
     >
       <View>
         <Logo />
