@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
+import Logo from "../../components/Logo"
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -57,6 +58,10 @@ const LoginScreen = () => {
       className="h-screen flex items-center justify-center bg-blue-200"
       behaviour="padding"
     >
+      <View>
+        <Logo />
+      </View>
+
       <View className="w-4/5">
         <TextInput
           className="bg-white px-4 py-2 rounded-lg mt-1"

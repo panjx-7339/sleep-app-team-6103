@@ -10,7 +10,7 @@ const HomeScreen = () => {
     <SafeAreaView className="bg-blue-100 flex-1">
       <View className="h-full flex-1 bg-blue-100">
         <TopBar />
-        <View className="justify-center items-center">
+        <View className="flex-1 justify-center items-center">
           <Cat />
         </View>
         <NavigationTab />
