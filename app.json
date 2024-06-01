@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "sleep-app",
+    "name": "DreamCat",
     "slug": "sleep-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,6 +22,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1c4f3c7f-ae08-4b21-be7a-51c0b9744f09"
+      }
+    },
+    "owner": "maegant"
   }
 }
