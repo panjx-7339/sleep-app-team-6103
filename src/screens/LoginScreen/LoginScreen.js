@@ -6,6 +6,7 @@ import Logo from "../../components/Logo";
 import LoginInput from "../../components/LoginInput";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -25,39 +26,51 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      className="h-screen flex items-center justify-center bg-blue-200"
+      className="h-screen flex items-center justify-center"
       behavior={Platform.OS === "android" ? "height" : "padding"}
     >
-      <View>
-        <Logo />
-      </View>
+      <LinearGradient
+        colors={['#6366f1', '#8b5cf6', '#ec4899']}
+        style={styles.linearGradient}
+      >
+        <View>
+          <Logo />
+        </View>
 
-      <View className="w-4/5">
-        <LoginInput
-          string="Email"
-          value={email}
-          setValue={setEmail}
-          isSecure={false}
-        />
-        <LoginInput
-          string="Password"
-          value={password}
-          setValue={setPassword}
-          isSecure={true}
-        />
-      </View>
+        <View className="w-4/5">
+          <LoginInput
+            string="Email"
+            value={email}
+            setValue={setEmail}
+            isSecure={false}
+          />
+          <LoginInput
+            string="Password"
+            value={password}
+            setValue={setPassword}
+            isSecure={true}
+          />
+        </View>
 
-      <View className="w-3/5 flex justify-center items-center mt-10">
-        <LoginButton type="login" email={email} password={password} />
-        <Redirect
-          string="New to this app? Create an account here."
-          redirectTo="Registration"
-        />
-      </View>
+        <View className="w-3/5 flex justify-center items-center mt-10">
+          <LoginButton type="login" email={email} password={password} />
+          <Redirect
+            string="New to this app? Create an account here."
+            redirectTo="Registration"
+          />
+        </View>
+      </LinearGradient>
     </KeyboardAvoidingView>
   );
 };
 
 export default LoginScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
+  },
+});

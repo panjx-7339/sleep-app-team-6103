@@ -15,10 +15,10 @@ const SignOutButton = () => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      className=" bg-blue-200 mt-1 border-2 border-white px-9 py-1 rounded-lg"
+      className=" bg-blue-800 mt-1 border-2 border-gray-500 px-9 py-1 rounded-lg"
       onPress={handleSignOut}
     >
-      <Text className="text-center">Sign out</Text>
+      <Text className="text-center text-white">Sign out</Text>
     </TouchableOpacity>
   );
 };
