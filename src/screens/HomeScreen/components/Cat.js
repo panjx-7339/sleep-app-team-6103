@@ -6,7 +6,7 @@ const Cat = () => {
     <View>
       <Image
         source={require("../../../../assets/cat-image.png")}
-        style={{ width: 350, height: 350 }}
+        style={{ width: 300, height: 300 }}
       />
     </View>
   );
