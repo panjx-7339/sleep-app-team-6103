@@ -1,6 +1,5 @@
 {
-  "name": "DreamCat",
-  "slug":"sleepApp6103",
+  "name": "sleep-app",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
