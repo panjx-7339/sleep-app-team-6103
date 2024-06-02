@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import firebase from "firebase/compat";
+import { firebase, auth } from "../firebase/config";
 
 const LoginButton = (props) => {
   const handleLogin = () => {
-    firebase
-      .auth()
+    auth
       .signInWithEmailAndPassword(props.email, props.password)
       .then((response) => {
         const uid = response.user.uid;

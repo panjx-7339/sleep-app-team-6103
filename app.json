@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "DreamCat",
-    "slug": "sleepApp6103",
+    "slug": "sleep-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,13 +12,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sleepapp6103"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.sleepapp6103"
     },
     "web": {
       "favicon": "./assets/favicon.png"
