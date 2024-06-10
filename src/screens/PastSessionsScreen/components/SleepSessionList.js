@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const SleepScreen = () => {
+const SleepSessionList = () => {
   return (
     <View>
-      <Text>SleepScreen</Text>
+      <Text>SleepSessionList</Text>
     </View>
   );
 };
 
-export default SleepScreen;
+export default SleepSessionList;
 
 const styles = StyleSheet.create({});

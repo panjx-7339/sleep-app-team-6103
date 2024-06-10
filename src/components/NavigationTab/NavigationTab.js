@@ -6,8 +6,8 @@ const NavigationTab = () => {
   return (
     <View className="absolute bottom-0 flex-row flex-1">
       <NavigationButton name="Stats" navigateTo="Stats" />
-      <NavigationButton name="Start Session" navigateTo="Sleep" />
-      <NavigationButton name="View Past Sessions" navigateTo="Sleep" />
+      <NavigationButton name="Start Session" navigateTo="PastSessions" />
+      <NavigationButton name="View Past Sessions" navigateTo="PastSessions" />
       <NavigationButton name="Shop" navigateTo="Shop" />
     </View>
   );

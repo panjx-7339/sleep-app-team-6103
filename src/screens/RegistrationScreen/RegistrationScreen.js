@@ -1,11 +1,16 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View, Platform } from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Logo from "../../components/Logo";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
 import LoginInput from "../../components/LoginInput";
-import { LinearGradient } from 'expo-linear-gradient';
-
+import { LinearGradient } from "expo-linear-gradient";
 
 const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
@@ -14,11 +19,11 @@ const RegistrationScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      className="h-screen flex items-center justify-center bg-blue-200"
+      className="h-screen flex items-center justify-center"
       behavior={Platform.OS === "android" ? "height" : "padding"}
     >
       <LinearGradient
-        colors={['#6366f1', '#8b5cf6', '#ec4899']}
+        colors={["#6366f1", "#8b5cf6", "#ec4899"]}
         style={styles.linearGradient}
       >
         <View>
@@ -68,8 +73,8 @@ export default RegistrationScreen;
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%'
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
 });
