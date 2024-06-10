@@ -10,7 +10,7 @@ const Redirect = (props) => {
       className="w-full p-2 flex items-center"
       onPress={() => navigation.navigate(props.redirectTo)}
     >
-      <Text className="text-center text-s underline">{props.string} </Text>
+      <Text className="text-center text-sm underline">{props.string} </Text>
     </TouchableOpacity>
   );
 };

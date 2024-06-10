@@ -1,9 +1,10 @@
-import { KeyboardAvoidingView, StyleSheet, View, Platform } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View, Platform, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
 import Logo from "../../components/Logo";
 import LoginInput from "../../components/LoginInput";
+import ForgotPasswordButton from "../../components/ForgotPasswordButton";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -50,8 +51,9 @@ const LoginScreen = () => {
             setValue={setPassword}
             isSecure={true}
           />
+          <ForgotPasswordButton email={email}/>
         </View>
-
+        
         <View className="w-3/5 flex justify-center items-center mt-10">
           <LoginButton type="login" email={email} password={password} />
           <Redirect

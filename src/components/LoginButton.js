@@ -24,7 +24,7 @@ const LoginButton = (props) => {
             alert(error);
           });
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => alert("Invalid email or password."));
   };
 
   const handleSignUp = () => {
