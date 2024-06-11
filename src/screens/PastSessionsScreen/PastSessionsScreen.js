@@ -9,6 +9,7 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import TopBar from "./components/TopBar";
 import SleepSessionList from "./components/SleepSessionList";
+import AddSleepSession from "./components/AddSleepSession";
 
 const PastSessionsScreen = () => {
   return (
@@ -21,6 +22,7 @@ const PastSessionsScreen = () => {
         style={styles.linearGradient}
       >
         <TopBar />
+        <AddSleepSession />
         <SleepSessionList />
       </LinearGradient>
     </KeyboardAvoidingView>
