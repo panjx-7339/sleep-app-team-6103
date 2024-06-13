@@ -7,11 +7,11 @@ import {
 } from "react-native";
 import React from "react";
 import { useState } from "react";
-import { db } from "../../../firebase/config";
+//import { db } from "../../../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 
 const AddSleepSession = () => {
-  const handleAddInput = async () => {
+  /*const handleAddInput = async () => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
         start: { start },
@@ -48,6 +48,11 @@ const AddSleepSession = () => {
       >
         <Text className="text-center">Add</Text>
       </TouchableOpacity>
+    </View>
+  );*/
+  return (
+    <View>
+      <Text>AddSleepSession</Text>
     </View>
   );
 };

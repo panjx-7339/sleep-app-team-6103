@@ -1,45 +1,46 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { firebase, auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginButton = (props) => {
-  const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(props.email, props.password)
-      .then((response) => {
-        const uid = response.user.uid;
-        const usersRef = firebase.firestore().collection("users");
-        usersRef
-          .doc(uid)
-          .get()
-          .then((firestoreDocument) => {
-            if (!firestoreDocument.exists) {
-              alert("User does not exist anymore.");
-              return;
-            }
-            const user = firestoreDocument.data();
-            navigation.navigate("Home", { user: user });
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      })
-      .catch((error) => alert("Invalid email or password."));
+  const navigation = useNavigation();
+  const handleLogin = async () => {
+    try {
+      await auth.signInWithEmailAndPassword(props.email, props.password);
+      navigation.navigate("Home");
+    } catch (error) {
+      if (error.code == "auth/user-not-found") {
+        alert("Invalid email or password");
+      } else {
+        alert(error);
+      }
+    }
   };
 
-  const handleSignUp = () => {
-    if (props.password !== props.confirmPassword) {
-      alert("Passwords don't match.");
-      return;
+  const handleSignUp = async () => {
+    try {
+      if (props.password !== props.confirmPassword) {
+        alert("Passwords entered do not match");
+        return;
+      }
+      const userCredential = await auth.createUserWithEmailAndPassword(
+        props.email,
+        props.password
+      );
+      const userInfo = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+      };
+      await db.collection("users").doc(userCredential.user.uid).set(userInfo);
+      navigation.navigate("Home");
+    } catch (error) {
+      if (error.code == "auth/user-not-found") {
+        alert("Invalid email or password");
+      } else {
+        alert(error);
+      }
     }
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(props.email, props.password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Registered with:", user.email);
-      })
-      .catch((error) => alert(error.message));
   };
 
   return (
