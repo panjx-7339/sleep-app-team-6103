@@ -6,16 +6,28 @@ import {
   TextInput,
 } from "react-native";
 import React from "react";
-import { useState } from "react";
-//import { db } from "../../../firebase/config";
-import { collection, addDoc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { auth, db } from "../../../firebase/config";
 
 const AddSleepSession = () => {
-  /*const handleAddInput = async () => {
+  const [uid, setUid] = useState();
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUid(user.uid);
+      }
+    });
+  }, []);
+  const userSessionsRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("sessions");
+
+  const handleAddInput = async () => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
-        start: { start },
-        end: { end },
+      const docRef = await userSessionsRef.add({
+        start: start,
+        end: end,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
@@ -48,11 +60,6 @@ const AddSleepSession = () => {
       >
         <Text className="text-center">Add</Text>
       </TouchableOpacity>
-    </View>
-  );*/
-  return (
-    <View>
-      <Text>AddSleepSession</Text>
     </View>
   );
 };
