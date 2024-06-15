@@ -21,12 +21,19 @@ const SleepSessionList = () => {
 
   const [sessions, setSessions] = useState();
   const getSessions = async () => {
-    const querySnapshot = await userSessionsRef.get();
+    const querySnapshot = await userSessionsRef.orderBy("start").get();
     const userSessions = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data(),
+      start: doc.data().start.toDate(),
+      end: doc.data().end.toDate(),
+      durationInHours: doc.data().durationInHours,
+      startString: formatString(doc.data().start.toDate()),
+      endString: formatString(doc.data().end.toDate()),
     }));
     setSessions(userSessions);
+  };
+  const formatString = (date) => {
+    return date.toString();
   };
   useEffect(() => {
     getSessions();
@@ -35,7 +42,14 @@ const SleepSessionList = () => {
   return (
     <ScrollView className="w-full p-3">
       {sessions &&
-        sessions.map((sess) => <Session start={sess.start} end={sess.end} />)}
+        sessions.map((sess) => (
+          <Session
+            key={sess.id}
+            start={sess.startString}
+            end={sess.endString}
+            duration={sess.durationInHours}
+          />
+        ))}
     </ScrollView>
   );
 };
