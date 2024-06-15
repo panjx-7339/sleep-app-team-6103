@@ -20,7 +20,8 @@ const SleepSessionList = () => {
     .collection("sessions");
 
   const [sessions, setSessions] = useState();
-  const getSessions = async () => {
+
+  const initializeSessions = async () => {
     const querySnapshot = await userSessionsRef.orderBy("start").get();
     const userSessions = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -31,6 +32,26 @@ const SleepSessionList = () => {
       endString: formatString(doc.data().end.toDate()),
     }));
     setSessions(userSessions);
+  };
+  useEffect(() => {
+    initializeSessions();
+  }, [uid]);
+
+  const getSessions = () => {
+    const unsubscribe = userSessionsRef
+      .orderBy("start", "desc")
+      .onSnapshot((querySnapshot) => {
+        const userSessions = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          start: doc.data().start.toDate(),
+          end: doc.data().end.toDate(),
+          durationInHours: doc.data().durationInHours,
+          startString: formatString(doc.data().start.toDate()),
+          endString: formatString(doc.data().end.toDate()),
+        }));
+        setSessions(userSessions);
+      });
+    return unsubscribe;
   };
   const formatString = (date) => {
     return date.toString();

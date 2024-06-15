@@ -10,22 +10,25 @@ import { LinearGradient } from "expo-linear-gradient";
 import TopBar from "./components/TopBar";
 import SleepSessionList from "./components/SleepSessionList";
 import AddSleepSession from "./components/AddSleepSession";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PastSessionsScreen = () => {
   return (
-    <KeyboardAvoidingView
-      className="h-screen flex items-center justify-center"
-      behavior={Platform.OS === "android" ? "height" : "padding"}
+    <LinearGradient
+      colors={["#6366f1", "#8b5cf6", "#ec4899"]}
+      style={styles.linearGradient}
     >
-      <LinearGradient
-        colors={["#6366f1", "#8b5cf6", "#ec4899"]}
-        style={styles.linearGradient}
-      >
-        <TopBar />
-        <AddSleepSession />
-        <SleepSessionList />
-      </LinearGradient>
-    </KeyboardAvoidingView>
+      <SafeAreaView className="flex-1">
+        <KeyboardAvoidingView
+          className="h-screen flex items-center justify-center"
+          behavior={Platform.OS === "android" ? "height" : "padding"}
+        >
+          <TopBar />
+          <AddSleepSession />
+          <SleepSessionList />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 

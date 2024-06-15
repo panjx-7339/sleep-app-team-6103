@@ -42,6 +42,10 @@ const AddSleepSession = () => {
         endTime.getMinutes()
       );
       const durationInHours = (end - start) / (1000 * 60 * 60);
+      if (durationInHours < 0) {
+        alert("Start time should be before end time.");
+        return;
+      }
       const docRef = await userSessionsRef.add({
         start: start,
         end: end,

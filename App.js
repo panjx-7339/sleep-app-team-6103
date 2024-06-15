@@ -7,7 +7,7 @@ import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
 import ShopScreen from "./src/screens/ShopScreen/ShopScreen";
-import SleepScreen from "./src/screens/PastSessionsScreen/PastSessionsScreen";
+import PastSessionsScreen from "./src/screens/PastSessionsScreen/PastSessionsScreen";
 import StatsScreen from "./src/screens/StatsScreen/StatsScreen";
 const Stack = createNativeStackNavigator();
 
@@ -31,8 +31,16 @@ export default function App() {
           component={HomeScreen}
         />
         <Stack.Screen name="Shop" component={ShopScreen} />
-        <Stack.Screen name="PastSessions" component={SleepScreen} />
-        <Stack.Screen name="Stats" component={StatsScreen} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="PastSessions"
+          component={PastSessionsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Stats"
+          component={StatsScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

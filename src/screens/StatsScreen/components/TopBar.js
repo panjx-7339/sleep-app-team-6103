@@ -6,7 +6,7 @@ const TopBar = () => {
   return (
     <View className="w-full h-11  flex flex-row items-center justify-between px-4">
       <ReturnToHome />
-      <Text className="text-center text-xl">Sleep Sessions</Text>
+      <Text className="text-center text-xl">Stats</Text>
     </View>
   );
 };
