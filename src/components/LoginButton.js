@@ -10,11 +10,7 @@ const LoginButton = (props) => {
       await auth.signInWithEmailAndPassword(props.email, props.password);
       navigation.navigate("Home");
     } catch (error) {
-      if (error.code == "auth/user-not-found") {
-        alert("Invalid email or password");
-      } else {
-        alert(error);
-      }
+      alert("Invalid email or password.");
     }
   };
 
@@ -35,10 +31,10 @@ const LoginButton = (props) => {
       await db.collection("users").doc(userCredential.user.uid).set(userInfo);
       navigation.navigate("Home");
     } catch (error) {
-      if (error.code == "auth/user-not-found") {
-        alert("Invalid email or password");
+      if (error.code == "auth/email-already-in-use") {
+        alert("Email already in use");
       } else {
-        alert(error);
+        alert(error.message);
       }
     }
   };

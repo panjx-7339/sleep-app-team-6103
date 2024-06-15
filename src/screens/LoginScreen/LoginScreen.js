@@ -1,13 +1,20 @@
-import { KeyboardAvoidingView, StyleSheet, View, Platform, Text, TouchableOpacity } from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  View,
+  Platform,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
-import { firebase } from "../../firebase/config";
+import { auth } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
 import Logo from "../../components/Logo";
 import LoginInput from "../../components/LoginInput";
 import ForgotPasswordButton from "../../components/ForgotPasswordButton";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -16,12 +23,14 @@ const LoginScreen = () => {
 
   //auth listener
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log("signed in");
         navigation.navigate("Home");
+      } else {
+        console.log("signed out");
       }
     });
-
     return unsubscribe;
   }, []);
 
@@ -31,7 +40,7 @@ const LoginScreen = () => {
       behavior={Platform.OS === "android" ? "height" : "padding"}
     >
       <LinearGradient
-        colors={['#6366f1', '#8b5cf6', '#ec4899']}
+        colors={["#6366f1", "#8b5cf6", "#ec4899"]}
         style={styles.linearGradient}
       >
         <View>
@@ -51,9 +60,9 @@ const LoginScreen = () => {
             setValue={setPassword}
             isSecure={true}
           />
-          <ForgotPasswordButton email={email}/>
+          <ForgotPasswordButton email={email} />
         </View>
-        
+
         <View className="w-3/5 flex justify-center items-center mt-10">
           <LoginButton type="login" email={email} password={password} />
           <Redirect
@@ -71,8 +80,8 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%'
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
 });
