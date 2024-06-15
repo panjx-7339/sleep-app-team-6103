@@ -10,7 +10,20 @@ const LoginButton = (props) => {
       await auth.signInWithEmailAndPassword(props.email, props.password);
       navigation.navigate("Home");
     } catch (error) {
-      alert("Invalid email or password.");
+      switch (error.code) {
+        case ("auth/invalid-email"):
+          alert("Invalid email provided");
+          break;
+        case ("auth/missing-password"):
+          alert("Missing password");
+          break;
+        case ("auth/invalid-credential"):
+          alert("Invalid credentials");
+          break;
+        default:
+          alert(error.code);
+          break;
+      }
     }
   };
 
@@ -31,10 +44,19 @@ const LoginButton = (props) => {
       await db.collection("users").doc(userCredential.user.uid).set(userInfo);
       navigation.navigate("Home");
     } catch (error) {
-      if (error.code == "auth/email-already-in-use") {
-        alert("Email already in use");
-      } else {
-        alert(error.message);
+      switch (error.code) {
+        case "auth/invalid-email":
+          alert("Invalid email provided");
+          break;
+        case "auth/weak-password":
+          alert("Invalid password provided, should be at least 6 characters");
+          break;
+        case "auth/email-already-in-use":
+          alert("Email is already is use");
+          break;
+        default:
+          alert(error.message);
+          break;
       }
     }
   };
