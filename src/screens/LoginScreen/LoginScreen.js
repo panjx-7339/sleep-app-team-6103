@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, StyleSheet, View, Platform, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { firebase, auth } from "../../firebase/config";
+import { firebase } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
 import Logo from "../../components/Logo";
 import LoginInput from "../../components/LoginInput";
@@ -16,7 +16,7 @@ const LoginScreen = () => {
 
   //auth listener
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         navigation.navigate("Home");
       }

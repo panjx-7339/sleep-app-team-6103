@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { firebase, auth } from "../firebase/config";
+import { firebase } from "../firebase/config";
 
 const ForgotPasswordButton = (props) => {
   const handlePasswordReset = () => {
@@ -8,7 +8,7 @@ const ForgotPasswordButton = (props) => {
       alert("Please enter your email address.");
       return;
     }
-    auth.sendPasswordResetEmail(props.email)
+    firebase.auth().sendPasswordResetEmail(props.email)
       .then(() => {
         alert("Password reset email has been sent.");
       })
@@ -18,9 +18,9 @@ const ForgotPasswordButton = (props) => {
             alert("Please enter a valid email address.");
             break;
           default:
-            alert("An error has occurred. Please try again.");
-            break;
+            alert("An error has occurred. Please try again.")
         };
+        // alert(error.message);
       });
   };
 

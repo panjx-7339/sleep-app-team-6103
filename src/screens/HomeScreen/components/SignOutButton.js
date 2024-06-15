@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { firebase, auth } from "../../../firebase/config";
+import { firebase } from "../../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
 
 const SignOutButton = () => {
   const handleSignOut = () => {
-    auth
+    firebase
+      .auth()
       .signOut()
       .then(() => navigation.replace("Login"))
       .catch((error) => alert(error.message));
