@@ -9,6 +9,7 @@ import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScr
 import ShopScreen from "./src/screens/ShopScreen/ShopScreen";
 import PastSessionsScreen from "./src/screens/PastSessionsScreen/PastSessionsScreen";
 import StatsScreen from "./src/screens/StatsScreen/StatsScreen";
+import AccountScreen from "./src/screens/AccountScreen/AccountScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -30,7 +31,11 @@ export default function App() {
           name="Home"
           component={HomeScreen}
         />
-        <Stack.Screen name="Shop" component={ShopScreen} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Shop"
+          component={ShopScreen}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="PastSessions"
@@ -40,6 +45,11 @@ export default function App() {
           options={{ headerShown: false }}
           name="Stats"
           component={StatsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Account"
+          component={AccountScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

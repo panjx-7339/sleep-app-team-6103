@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "./components/TopBar";
 import Graph from "./components/Graph";
+import NavigationTab from "../../components/NavigationTab/NavigationTab";
 
 const StatsScreen = () => {
   return (
@@ -20,6 +21,7 @@ const StatsScreen = () => {
       <SafeAreaView className="flex-1">
         <TopBar />
         <Graph />
+        <NavigationTab />
       </SafeAreaView>
     </LinearGradient>
   );

@@ -24,11 +24,8 @@ const HomeScreen = () => {
       style={styles.linearGradient}
     >
       <SafeAreaView className="flex-1">
-        <View className="h-full flex-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+        <View className="h-full flex-1 ">
           <TopBar />
-          <TouchableOpacity onPress={() => console.log(uid)}>
-            <Text>test button</Text>
-          </TouchableOpacity>
           <View className="flex-1 justify-center items-center">
             <Cat />
           </View>

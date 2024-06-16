@@ -23,6 +23,7 @@ const SleepSessionList = () => {
 
   const initializeSessions = async () => {
     const querySnapshot = await userSessionsRef.orderBy("start").get();
+
     const userSessions = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       start: doc.data().start.toDate(),
@@ -61,7 +62,7 @@ const SleepSessionList = () => {
   }, [uid]);
 
   return (
-    <ScrollView className="w-full p-3">
+    <ScrollView className="w-full p-5">
       {sessions &&
         sessions.map((sess) => (
           <Session

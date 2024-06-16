@@ -11,6 +11,7 @@ import TopBar from "./components/TopBar";
 import SleepSessionList from "./components/SleepSessionList";
 import AddSleepSession from "./components/AddSleepSession";
 import { SafeAreaView } from "react-native-safe-area-context";
+import NavigationTab from "../../components/NavigationTab/NavigationTab";
 
 const PastSessionsScreen = () => {
   return (
@@ -19,14 +20,12 @@ const PastSessionsScreen = () => {
       style={styles.linearGradient}
     >
       <SafeAreaView className="flex-1">
-        <KeyboardAvoidingView
-          className="h-screen flex items-center justify-center"
-          behavior={Platform.OS === "android" ? "height" : "padding"}
-        >
+        <View className="h-full flex-1 justify-center ">
           <TopBar />
           <AddSleepSession />
           <SleepSessionList />
-        </KeyboardAvoidingView>
+          <NavigationTab />
+        </View>
       </SafeAreaView>
     </LinearGradient>
   );
