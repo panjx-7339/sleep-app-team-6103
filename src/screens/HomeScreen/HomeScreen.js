@@ -6,6 +6,7 @@ import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { auth } from "../../firebase/config";
+import StopwatchButton from "./components/StopwatchButton";
 
 const HomeScreen = () => {
   const [uid, setUid] = useState();
@@ -24,11 +25,9 @@ const HomeScreen = () => {
       style={styles.linearGradient}
     >
       <SafeAreaView className="flex-1">
-        <View className="h-full flex-1 ">
+        <View className="h-full flex-1">
           <TopBar />
-          <View className="flex-1 justify-center items-center">
-            <Cat />
-          </View>
+          <Cat />
           <NavigationTab />
         </View>
       </SafeAreaView>

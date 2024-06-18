@@ -3,7 +3,7 @@ import React from "react";
 
 const Cat = () => {
   return (
-    <View>
+    <View className="flex-1 justify-center items-center">
       <Image
         source={require("../../../../assets/cat-image.png")}
         style={{ width: 300, height: 300 }}
