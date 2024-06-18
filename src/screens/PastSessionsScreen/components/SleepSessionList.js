@@ -20,28 +20,14 @@ const SleepSessionList = () => {
     .collection("sessions");
 
   const [sessions, setSessions] = useState();
+  const [init, setInit] = useState(false);
 
   const initializeSessions = async () => {
-    const querySnapshot = await userSessionsRef.orderBy("start").get();
-
-    const userSessions = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      start: doc.data().start.toDate(),
-      end: doc.data().end.toDate(),
-      durationInHours: doc.data().durationInHours,
-      startString: formatString(doc.data().start.toDate()),
-      endString: formatString(doc.data().end.toDate()),
-    }));
-    setSessions(userSessions);
-  };
-  useEffect(() => {
-    initializeSessions();
-  }, [uid]);
-
-  const getSessions = () => {
-    const unsubscribe = userSessionsRef
-      .orderBy("start", "desc")
-      .onSnapshot((querySnapshot) => {
+    if (uid) {
+      if (!init) {
+        const querySnapshot = await userSessionsRef
+          .orderBy("start", "desc")
+          .get();
         const userSessions = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           start: doc.data().start.toDate(),
@@ -51,28 +37,45 @@ const SleepSessionList = () => {
           endString: formatString(doc.data().end.toDate()),
         }));
         setSessions(userSessions);
-      });
-    return unsubscribe;
+        setInit(true);
+      } else {
+        userSessionsRef.orderBy("start", "desc").onSnapshot((querySnapshot) => {
+          const userSessions = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            start: doc.data().start.toDate(),
+            end: doc.data().end.toDate(),
+            durationInHours: doc.data().durationInHours,
+            startString: formatString(doc.data().start.toDate()),
+            endString: formatString(doc.data().end.toDate()),
+          }));
+          setSessions(userSessions);
+        });
+      }
+    }
   };
+
+  useEffect(() => {
+    initializeSessions();
+  }, [uid]);
+
   const formatString = (date) => {
     return date.toString();
   };
-  useEffect(() => {
-    getSessions();
-  }, [uid]);
 
   return (
-    <ScrollView className="w-full p-5">
-      {sessions &&
-        sessions.map((sess) => (
-          <Session
-            key={sess.id}
-            start={sess.startString}
-            end={sess.endString}
-            duration={sess.durationInHours}
-          />
-        ))}
-    </ScrollView>
+    <View>
+      <ScrollView className="w-full p-5">
+        {sessions &&
+          sessions.map((sess) => (
+            <Session
+              key={sess.id}
+              start={sess.startString}
+              end={sess.endString}
+              duration={sess.durationInHours}
+            />
+          ))}
+      </ScrollView>
+    </View>
   );
 };
 
