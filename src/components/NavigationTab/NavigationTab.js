@@ -4,7 +4,7 @@ import NavigationButton from "./NavigationButton";
 
 const NavigationTab = () => {
   return (
-    <View className="absolute bottom-0 flex-row flex-1">
+    <View style={styles.container}>
       <NavigationButton name="Home" navigateTo="Home" />
       <NavigationButton name="Stats" navigateTo="Stats" />
       <NavigationButton name="View Sessions" navigateTo="PastSessions" />
@@ -16,4 +16,16 @@ const NavigationTab = () => {
 
 export default NavigationTab;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-around", // Distribute buttons evenly
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
+  },
+});

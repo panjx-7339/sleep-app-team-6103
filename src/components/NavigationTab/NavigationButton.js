@@ -7,7 +7,7 @@ const NavigationButton = (props) => {
 
   return (
     <TouchableOpacity
-      className="justify-center h-24 w-1/5 border-2 border-gray-500"
+      className="justify-center h-16 w-1/5 border-2 border-gray-500"
       onPress={() => navigation.navigate(props.navigateTo)}
     >
       <Text className="text-center color-white text-l">{props.name}</Text>

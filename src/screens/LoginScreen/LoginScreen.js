@@ -14,7 +14,7 @@ import LoginInput from "../../components/LoginInput";
 import ForgotPasswordButton from "./components/ForgotPasswordButton";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
-import Background from "../../components/Background";
+import AuthBackground from "../../components/AuthBackground";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ const LoginScreen = () => {
   }, []);
 
   return (
-    <Background>
+    <AuthBackground>
       <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Logo />
@@ -65,7 +65,7 @@ const LoginScreen = () => {
           />
         </View>
       </View>
-    </Background>
+    </AuthBackground>
   );
 };
 

@@ -11,7 +11,7 @@ import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
 import LoginInput from "../../components/LoginInput";
 import { LinearGradient } from "expo-linear-gradient";
-import Background from "../../components/Background";
+import AuthBackground from "../../components/AuthBackground";
 
 const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const RegistrationScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <Background>
+    <AuthBackground>
       <View style={styles.logoContainer}>
         <Logo />
       </View>
@@ -57,7 +57,7 @@ const RegistrationScreen = () => {
           redirectTo="Login"
         />
       </View>
-    </Background>
+    </AuthBackground>
   );
 };
 
