@@ -11,10 +11,10 @@ import { auth } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
 import Logo from "../../components/Logo";
 import LoginInput from "../../components/LoginInput";
-import ForgotPasswordButton from "../../components/ForgotPasswordButton";
+import ForgotPasswordButton from "./components/ForgotPasswordButton";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
-import { LinearGradient } from "expo-linear-gradient";
+import Background from "../../components/Background";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -35,19 +35,13 @@ const LoginScreen = () => {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-      className="h-screen flex items-center justify-center"
-      behavior={Platform.OS === "android" ? "height" : "padding"}
-    >
-      <LinearGradient
-        colors={["#6366f1", "#8b5cf6", "#ec4899"]}
-        style={styles.linearGradient}
-      >
-        <View>
+    <Background>
+      <View style={styles.container}>
+        <View style={styles.logoContainer}>
           <Logo />
         </View>
 
-        <View className="w-4/5">
+        <View style={styles.inputContainer}>
           <LoginInput
             string="Email"
             value={email}
@@ -63,25 +57,35 @@ const LoginScreen = () => {
           <ForgotPasswordButton email={email} />
         </View>
 
-        <View className="w-3/5 flex justify-center items-center mt-10">
+        <View style={styles.buttonContainer}>
           <LoginButton type="login" email={email} password={password} />
           <Redirect
             string="New to this app? Create an account here."
             redirectTo="Registration"
           />
         </View>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+      </View>
+    </Background>
   );
 };
 
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  linearGradient: {
+  buttonContainer: {
+    width: "80%",
+  },
+  container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  logoContainer: {
+    marginBottom: 50,
+    alignItems: "center",
   },
 });

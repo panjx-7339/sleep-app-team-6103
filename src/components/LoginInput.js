@@ -4,7 +4,7 @@ import React from "react";
 const LoginInput = (props) => {
   return (
     <TextInput
-      className="bg-white px-4 py-2 rounded-lg mt-1"
+      style={styles.input}
       placeholder={props.string}
       value={props.value}
       onChangeText={(text) => props.setValue(text)}
@@ -15,4 +15,13 @@ const LoginInput = (props) => {
 
 export default LoginInput;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  input: {
+    backgroundColor: "#fff",
+    fontFamily: "K2D",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 15,
+  },
+});

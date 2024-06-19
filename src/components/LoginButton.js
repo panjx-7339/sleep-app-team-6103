@@ -11,13 +11,13 @@ const LoginButton = (props) => {
       navigation.navigate("Home");
     } catch (error) {
       switch (error.code) {
-        case ("auth/invalid-email"):
+        case "auth/invalid-email":
           alert("Invalid email provided");
           break;
-        case ("auth/missing-password"):
+        case "auth/missing-password":
           alert("Missing password");
           break;
-        case ("auth/invalid-credential"):
+        case "auth/invalid-credential":
           alert("Invalid credentials");
           break;
         default:
@@ -63,10 +63,10 @@ const LoginButton = (props) => {
 
   return (
     <TouchableOpacity
-      className="w-full bg-white mt-1 border-2 border-[#0782F9] p-4 rounded-lg flex items-center"
+      style={styles.button}
       onPress={props.type === "login" ? handleLogin : handleSignUp}
     >
-      <Text className="text-center">
+      <Text style={styles.text}>
         {props.type === "login" ? "Login" : "Register"}
       </Text>
     </TouchableOpacity>
@@ -75,4 +75,19 @@ const LoginButton = (props) => {
 
 export default LoginButton;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "#2C2C4D",
+    fontFamily: "K2D",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 15,
+  },
+  text: {
+    fontFamily: "K2DBold",
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 17,
+  },
+});

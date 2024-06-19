@@ -3,11 +3,10 @@ import React from "react";
 
 const Logo = () => {
   return (
-    <View>
-      <Text className="text-center text-2xl font-bold">DreamCat</Text>
+    <View style={styles.container}>
       <Image
-        source={require("../../assets/cat-image.png")}
-        style={{ width: 300, height: 300 }}
+        source={require("../../assets/logo.png")}
+        style={{ width: 200, height: 200 }}
       />
     </View>
   );
@@ -15,4 +14,9 @@ const Logo = () => {
 
 export default Logo;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignContent: "center",
+  },
+});

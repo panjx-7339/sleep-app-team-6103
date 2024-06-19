@@ -30,6 +30,13 @@
         "projectId": "1c4f3c7f-ae08-4b21-be7a-51c0b9744f09"
       }
     },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/K2D.otf"]
+        }
+      ]],
     "owner": "maegant"
   }
 }

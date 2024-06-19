@@ -1,11 +1,18 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Modal,
+} from "react-native";
 import { React, useState, useEffect } from "react";
 import { auth, db } from "../../../firebase/config";
 
 const SleepGoalDisplay = () => {
   const [uid, setUid] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [number, onChangeNumber] = useState('');
+  const [number, onChangeNumber] = useState("");
 
   useEffect(() => {
     // Get current user id
@@ -29,7 +36,7 @@ const SleepGoalDisplay = () => {
           return;
         }
         await db.collection("users").doc(uid).update({
-          sleepGoal: sleepGoal
+          sleepGoal: sleepGoal,
         });
         console.log("Sleep goal updated for user ID: ", uid);
       } catch (error) {
@@ -45,16 +52,19 @@ const SleepGoalDisplay = () => {
   return (
     <View>
       <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}>
-        <View className="flex-1 justify-center items-center">  
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          console.log("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View className="flex-1 justify-center items-center">
           <View className="bg-[#6C6CB3] p-8 rounded-lg items-center">
-            <Text className="text-white">Please enter your sleep goal, in hours:</Text>
+            <Text className="text-white">
+              Please enter your sleep goal, in hours:
+            </Text>
             <TextInput
               className=""
               onChangeText={onChangeNumber}
@@ -63,14 +73,15 @@ const SleepGoalDisplay = () => {
             />
             <TouchableOpacity
               className="bg-white px-3 py-2 rounded-full"
-              onPress={addSleepGoal}>
+              onPress={addSleepGoal}
+            >
               <Text className=" text-center text-black">Submit</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-      
-      <TouchableOpacity 
+
+      <TouchableOpacity
         className=" bg-blue-800 mt-1 border-2 border-gray-500 px-1 py-1 rounded-lg w-2/3"
         onPress={() => setModalVisible(true)}
       >

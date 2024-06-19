@@ -10,49 +10,52 @@ import ShopScreen from "./src/screens/ShopScreen/ShopScreen";
 import PastSessionsScreen from "./src/screens/PastSessionsScreen/PastSessionsScreen";
 import StatsScreen from "./src/screens/StatsScreen/StatsScreen";
 import AccountScreen from "./src/screens/AccountScreen/AccountScreen";
+import FontLoader from "./src/components/FontLoader";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Registration"
-          component={RegistrationScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Shop"
-          component={ShopScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="PastSessions"
-          component={PastSessionsScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Stats"
-          component={StatsScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Account"
-          component={AccountScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <FontLoader>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Registration"
+            component={RegistrationScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home"
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Shop"
+            component={ShopScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="PastSessions"
+            component={PastSessionsScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Stats"
+            component={StatsScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Account"
+            component={AccountScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FontLoader>
   );
 }
 

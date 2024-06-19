@@ -7,14 +7,25 @@ const Redirect = (props) => {
 
   return (
     <TouchableOpacity
-      className="w-full p-2 flex items-center"
+      style={styles.container}
       onPress={() => navigation.navigate(props.redirectTo)}
     >
-      <Text className="text-center text-sm underline">{props.string} </Text>
+      <Text style={styles.text}>{props.string} </Text>
     </TouchableOpacity>
   );
 };
 
 export default Redirect;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    marginTop: 3,
+  },
+  text: {
+    fontFamily: "K2DBold",
+    color: "#fff",
+    textAlign: "center",
+  },
+});

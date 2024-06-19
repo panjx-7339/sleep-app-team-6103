@@ -2,13 +2,14 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NavigationTab from "../../components/NavigationTab/NavigationTab";
+import Background from "../../components/Background";
 
 const AccountScreen = () => {
   return (
-    <SafeAreaView className="h-full">
+    <Background>
       <Text>AccountScreen</Text>
       <NavigationTab />
-    </SafeAreaView>
+    </Background>
   );
 };
 

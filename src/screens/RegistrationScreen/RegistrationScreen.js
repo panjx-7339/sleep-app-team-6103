@@ -11,6 +11,7 @@ import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
 import LoginInput from "../../components/LoginInput";
 import { LinearGradient } from "expo-linear-gradient";
+import Background from "../../components/Background";
 
 const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
@@ -18,63 +19,66 @@ const RegistrationScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <KeyboardAvoidingView
-      className="h-screen flex items-center justify-center"
-      behavior={Platform.OS === "android" ? "height" : "padding"}
-    >
-      <LinearGradient
-        colors={["#6366f1", "#8b5cf6", "#ec4899"]}
-        style={styles.linearGradient}
-      >
-        <View>
-          <Logo />
-        </View>
+    <Background>
+      <View style={styles.logoContainer}>
+        <Logo />
+      </View>
 
-        <View className="w-4/5">
-          <LoginInput
-            string="Email"
-            value={email}
-            setValue={setEmail}
-            isSecure={false}
-          />
-          <LoginInput
-            string="Password"
-            value={password}
-            setValue={setPassword}
-            isSecure={true}
-          />
-          <LoginInput
-            string="Confirm Password"
-            value={confirmPassword}
-            setValue={setConfirmPassword}
-            isSecure={true}
-          />
-        </View>
+      <View style={styles.inputContainer}>
+        <LoginInput
+          string="Email"
+          value={email}
+          setValue={setEmail}
+          isSecure={false}
+        />
+        <LoginInput
+          string="Password"
+          value={password}
+          setValue={setPassword}
+          isSecure={true}
+        />
+        <LoginInput
+          string="Confirm Password"
+          value={confirmPassword}
+          setValue={setConfirmPassword}
+          isSecure={true}
+        />
+      </View>
 
-        <View className="w-3/5 flex justify-center items-center mt-10">
-          <LoginButton
-            type="register"
-            email={email}
-            password={password}
-            confirmPassword={confirmPassword}
-          />
-          <Redirect
-            string="Already have an account? Log in here."
-            redirectTo="Login"
-          />
-        </View>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+      <View style={styles.buttonContainer}>
+        <LoginButton
+          type="register"
+          email={email}
+          password={password}
+          confirmPassword={confirmPassword}
+        />
+        <Redirect
+          string="Already have an account? Log in here."
+          redirectTo="Login"
+        />
+      </View>
+    </Background>
   );
 };
 
 export default RegistrationScreen;
 
 const styles = StyleSheet.create({
-  linearGradient: {
+  buttonContainer: {
+    width: "80%",
+  },
+  container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+  },
+  inputContainer: {
+    width: "80%",
+    marginBottom: 30,
+  },
+  logoContainer: {
+    marginBottom: 50,
+    alignItems: "center",
   },
 });

@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { auth } from "../../firebase/config";
 import StopwatchButton from "./components/StopwatchButton";
+import Background from "../../components/Background";
 
 const HomeScreen = () => {
   const [uid, setUid] = useState();
@@ -20,28 +21,16 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <LinearGradient
-      colors={["#6366f1", "#8b5cf6", "#ec4899"]}
-      style={styles.linearGradient}
-    >
-      <SafeAreaView className="flex-1">
-        <View className="h-full flex-1">
-          <TopBar />
-          <Cat />
-          <NavigationTab />
-        </View>
-      </SafeAreaView>
-    </LinearGradient>
+    <Background>
+      <View className="h-full flex-1">
+        <TopBar />
+        <Cat />
+        <NavigationTab />
+      </View>
+    </Background>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
-  linearGradient: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
-});
+const styles = StyleSheet.create({});
