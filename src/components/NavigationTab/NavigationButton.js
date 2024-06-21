@@ -4,17 +4,22 @@ import { useNavigation } from "@react-navigation/native";
 
 const NavigationButton = (props) => {
   const navigation = useNavigation();
+  const icon = props.icon;
 
   return (
-    <TouchableOpacity
-      className="justify-center h-16 w-1/5 border-2 border-gray-500"
-      onPress={() => navigation.navigate(props.navigateTo)}
-    >
-      <Text className="text-center color-white text-l">{props.name}</Text>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate(props.navigateTo)}>
+        {icon}
+      </TouchableOpacity>
+    </View>
   );
 };
 
 export default NavigationButton;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

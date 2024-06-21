@@ -63,8 +63,8 @@ const SleepSessionList = () => {
   };
 
   return (
-    <View className="h-48">
-      <ScrollView className="w-full p-5">
+    <View>
+      <ScrollView>
         {sessions &&
           sessions.map((sess) => (
             <Session

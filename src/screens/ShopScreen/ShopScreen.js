@@ -7,8 +7,10 @@ import Background from "../../components/Background";
 const ShopScreen = () => {
   return (
     <Background>
-      <Text>ShopScreen</Text>
-      <NavigationTab />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Text>ShopScreen</Text>
+        <NavigationTab />
+      </SafeAreaView>
     </Background>
   );
 };

@@ -19,6 +19,28 @@ const Picker = (props) => {
     setShowPicker(false);
   };
 
+  function formatDate(date) {
+    const day = date.getDate();
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+  }
+
   const iosView = (
     <View>
       <DateTimePicker
@@ -28,19 +50,17 @@ const Picker = (props) => {
         is24Hour={true}
         display="default"
         onChange={onChange}
+        themeVariant="dark"
       />
     </View>
   );
 
   const androidView = (
     <View>
-      <TouchableOpacity
-        onPress={showDatepicker}
-        className="bg-gray-300 rounded-sm"
-      >
-        <Text>
+      <TouchableOpacity onPress={showDatepicker} style={styles.androidPicker}>
+        <Text style={styles.text}>
           {props.mode === "date"
-            ? props.value.toLocaleDateString()
+            ? formatDate(props.value)
             : props.value.toLocaleTimeString()}
         </Text>
       </TouchableOpacity>
@@ -61,4 +81,16 @@ const Picker = (props) => {
 
 export default Picker;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  androidPicker: {
+    backgroundColor: "rgba(128, 128, 128, 0.5)",
+    borderRadius: 5,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    margin: 7,
+  },
+  text: {
+    fontFamily: "K2D",
+    color: "#fff",
+  },
+});

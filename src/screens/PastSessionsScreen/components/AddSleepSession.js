@@ -10,6 +10,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase/config";
 import Picker from "./Picker";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const AddSleepSession = () => {
   const [uid, setUid] = useState();
@@ -61,10 +62,10 @@ const AddSleepSession = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   return (
-    <View className="flex-row items-center">
+    <View style={styles.container}>
       <View>
-        <View className="flex-row items-center">
-          <Text>Start: </Text>
+        <View style={styles.row}>
+          <Text style={styles.text}>Start: </Text>
           <Picker
             testID="startDatePicker"
             value={startDate}
@@ -78,8 +79,8 @@ const AddSleepSession = () => {
             mode="time"
           />
         </View>
-        <View className="flex-row items-center">
-          <Text> End: </Text>
+        <View style={styles.row}>
+          <Text style={styles.text}> End: </Text>
           <Picker
             testID="endDatePicker"
             value={endDate}
@@ -95,11 +96,8 @@ const AddSleepSession = () => {
         </View>
       </View>
 
-      <TouchableOpacity
-        className="bg-white h-12 border-2 border-[#0782F9] px-4 py-2 rounded-lg flex items-center justify-center"
-        onPress={handleAddInput}
-      >
-        <Text className="text-center text-base">Add</Text>
+      <TouchableOpacity onPress={handleAddInput} style={{ marginLeft: 20 }}>
+        <AntDesign name="pluscircleo" size={34} color="white" />
       </TouchableOpacity>
     </View>
   );
@@ -107,4 +105,24 @@ const AddSleepSession = () => {
 
 export default AddSleepSession;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#1D3573",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 15,
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+  },
+  text: {
+    fontFamily: "K2DBold",
+    color: "#fff",
+    fontSize: 18,
+  },
+  row: {
+    flexDirection: "row",
+  },
+});

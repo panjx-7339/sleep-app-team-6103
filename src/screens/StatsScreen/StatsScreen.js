@@ -12,6 +12,7 @@ import Background from "../../components/Background";
 import { auth, db } from "../../firebase/config";
 import BasicStats from "./components/BasicStats";
 import Prediction from "./components/Prediction";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const StatsScreen = () => {
   const [uid, setUid] = useState();
@@ -51,7 +52,7 @@ const StatsScreen = () => {
 
   return (
     <Background>
-      <View style={styles.main}>
+      <View style={styles.main} className="h-full flex-1">
         <View style={styles.header}>
           <Text style={styles.title}>Statistics</Text>
         </View>
