@@ -13,7 +13,9 @@ const Background = ({ children }) => {
         colors={["#0B0B19", "#38387F"]}
         style={styles.linearGradient}
       >
-        <SafeAreaView style={styles.container}>{children}</SafeAreaView>
+        <SafeAreaView>
+          <View style={styles.container}>{children}</View>
+        </SafeAreaView>
       </LinearGradient>
     </KeyboardAvoidingView>
   );
