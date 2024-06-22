@@ -37,9 +37,12 @@ const LoginButton = (props) => {
         props.email,
         props.password
       );
+      //add shop to userInfo
       const userInfo = {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
+        sleepGoal: 8,
+        points: 0,
       };
       await db.collection("users").doc(userCredential.user.uid).set(userInfo);
       navigation.navigate("Home");

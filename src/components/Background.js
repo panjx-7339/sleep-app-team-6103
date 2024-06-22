@@ -5,19 +5,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Background = ({ children }) => {
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "android" ? "height" : "padding"}
+    <LinearGradient
+      colors={["#0B0B19", "#38387F"]}
+      style={styles.linearGradient}
     >
-      <LinearGradient
-        colors={["#0B0B19", "#38387F"]}
-        style={styles.linearGradient}
-      >
-        <SafeAreaView>
-          <View style={styles.container}>{children}</View>
-        </SafeAreaView>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+      <SafeAreaView>
+        <View style={styles.container}>{children}</View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
@@ -29,6 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    alignSelf: "stretch",
   },
   linearGradient: {
     flex: 1,

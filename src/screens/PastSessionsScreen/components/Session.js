@@ -2,14 +2,47 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 const Session = (props) => {
-  const start = props.start;
-  const end = props.end;
+  const formatTime = (dateInput) => {
+    const date = new Date(dateInput);
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const suffix = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${day} ${month} ${year}, ${hours}:${formattedMinutes}${suffix}`;
+  };
+  const start = formatTime(props.start);
+  const end = formatTime(props.end);
+
+  const duration = Math.round(props.duration * 10) / 10;
 
   return (
     <View style={styles.container}>
-      <Text>Start: {props.start}</Text>
-      <Text>End: {props.end}</Text>
-      <Text>Duration: {props.duration}</Text>
+      <View style={styles.times}>
+        <Text style={styles.text}>Start: {start}</Text>
+        <Text style={styles.text}>End: {end}</Text>
+      </View>
+      <View style={styles.durationBox}>
+        <Text style={styles.duration}>{duration} h</Text>
+      </View>
     </View>
   );
 };
@@ -27,5 +60,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 10,
     paddingBottom: 15,
+    flexDirection: "row",
   },
+  times: {
+    flex: 6,
+    justifyContent: "flex-start",
+  },
+  text: {
+    color: "#fff",
+    fontFamily: "K2D",
+    fontSize: 15,
+  },
+  durationBox: { flex: 1, padding: 5 },
+  duration: { color: "#fff", fontFamily: "K2D", fontSize: 20 },
 });

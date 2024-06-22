@@ -46,12 +46,27 @@ const AddSleepSession = () => {
       if (durationInHours < 0) {
         alert("Start time should be before end time.");
         return;
+      } else if (durationInHours >= 24) {
+        alert("Sleep Session cannot be longer than 24 hours.");
+        return;
       }
+      //calculating points
+      // TODO: take goal from database
+      const goal = 8;
+      let points = 0;
+      points = durationInHours >= goal ? 15 : 5;
+      const metGoal = durationInHours >= goal;
+
       const docRef = await userSessionsRef.add({
         start: start,
         end: end,
         durationInHours: durationInHours,
+        points: points,
+        metGoal: metGoal,
       });
+
+      // TODO: add points to points from user document
+
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
       console.error("Error adding document: ", error);

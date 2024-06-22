@@ -10,14 +10,13 @@ import SleepSessionList from "./components/SleepSessionList";
 import AddSleepSession from "./components/AddSleepSession";
 import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import Background from "../../components/Background";
-import Title from "./components/Title";
 
 const PastSessionsScreen = () => {
   return (
     <Background>
       <View style={styles.main}>
         <View style={styles.header}>
-          <Text style={styles.title}>Statistics</Text>
+          <Text style={styles.title}>Past Sessions</Text>
         </View>
         <View style={styles.container}>
           <AddSleepSession />
@@ -58,6 +57,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    paddingBottom: 100,
+    paddingBottom: 90,
+    marginTop: 10,
   },
 });

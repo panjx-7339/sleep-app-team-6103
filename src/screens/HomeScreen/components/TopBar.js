@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import SignOutButton from "./SignOutButton";
 import Date from "./CurrentDate";
 import SleepGoalDisplay from "./SleepGoalDisplay";
 import PointsDisplay from "./PointsDisplay";
@@ -14,7 +13,6 @@ const TopBar = () => {
         <SleepGoalDisplay />
       </View>
       <View className="w-1/3 flex-col justify-center items-center">
-        <SignOutButton />
         <PointsDisplay />
       </View>
     </View>
