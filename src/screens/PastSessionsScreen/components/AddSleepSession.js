@@ -25,6 +25,7 @@ const AddSleepSession = () => {
     .collection("users")
     .doc(uid)
     .collection("sessions");
+  const userDocRef = db.collection("users").doc(uid);
 
   const handleAddInput = async () => {
     try {
@@ -50,9 +51,10 @@ const AddSleepSession = () => {
         alert("Sleep Session cannot be longer than 24 hours.");
         return;
       }
-      //calculating points
-      // TODO: take goal from database
-      const goal = 8;
+      const userDoc = await userDocRef.get();
+      const userData = userDoc.data();
+      const goal = userData.sleepGoal;
+      console.log(goal);
       let points = 0;
       points = durationInHours >= goal ? 15 : 5;
       const metGoal = durationInHours >= goal;
@@ -65,7 +67,18 @@ const AddSleepSession = () => {
         metGoal: metGoal,
       });
 
-      // TODO: add points to points from user document
+      const currentPoints = userData.points;
+      const updatedPoints = currentPoints + points;
+      await userDocRef
+        .update({
+          points: updatedPoints,
+        })
+        .then(() => {
+          console.log("Points successfully updated!");
+        })
+        .catch((error) => {
+          console.error("Error updating points: ", error);
+        });
 
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
