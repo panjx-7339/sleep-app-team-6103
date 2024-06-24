@@ -29,8 +29,10 @@ const StatsScreen = () => {
     .collection("users")
     .doc(uid)
     .collection("sessions");
+  const userDocRef = db.collection("users").doc(uid);
 
   const [sessions, setSessions] = useState();
+  const [goal, setGoal] = useState();
 
   const initializeSessions = async () => {
     if (uid) {
@@ -44,6 +46,9 @@ const StatsScreen = () => {
         durationInHours: doc.data().durationInHours,
       }));
       setSessions(userSessions);
+      const userDoc = await userDocRef.get();
+      const userData = userDoc.data();
+      setGoal(userData.sleepGoal);
     }
   };
   useEffect(() => {
@@ -59,7 +64,7 @@ const StatsScreen = () => {
         <View style={styles.container}>
           <BasicStats sessions={sessions} />
           <Graph sessions={sessions} />
-          <Prediction />
+          <Prediction sessions={sessions} goal={goal} />
         </View>
       </View>
       <NavigationTab />
