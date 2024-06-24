@@ -61,9 +61,9 @@ const Prediction = (props) => {
       }
     }
     daySuccessRate.sort((a, b) => a[0] - b[0]);
-    console.log("Success Count: ", daySuccessCount);
-    console.log("Total Count: ", dayTotalCount);
-    console.log("Success Rate: ", daySuccessRate);
+    //console.log("Success Count: ", daySuccessCount);
+    //console.log("Total Count: ", dayTotalCount);
+    //console.log("Success Rate: ", daySuccessRate);
 
     return `You are most likely to miss your sleep goal on ${daySuccessRate[0][1]}, ${daySuccessRate[1][1]} and ${daySuccessRate[2][1]}`;
   };
