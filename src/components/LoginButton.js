@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { auth, db } from "../firebase/config";
 import { useNavigation } from "@react-navigation/native";
+import ShopItems from "./ShopItems";
 
 const LoginButton = (props) => {
   const navigation = useNavigation();
@@ -31,13 +32,13 @@ const LoginButton = (props) => {
     try {
       if (props.password !== props.confirmPassword) {
         alert("Passwords entered do not match");
-        return;
+        return; 
       }
       const userCredential = await auth.createUserWithEmailAndPassword(
         props.email,
         props.password
       );
-      //add shop to userInfo
+
       const userInfo = {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
@@ -46,6 +47,24 @@ const LoginButton = (props) => {
       };
       await db.collection("users").doc(userCredential.user.uid).set(userInfo);
       navigation.navigate("Home");
+
+      const userShopRef = db
+      .collection("users")
+      .doc(userCredential.user.uid)
+      .collection("shop");
+      
+      const docRef = await ShopItems.forEach(
+        ([name, item]) => {
+          userShopRef
+          .doc(name)
+          .set(item)
+          .then(() => {
+            console.log("Document successfully written for: ", item.name)
+          })
+          .catch((error) => console.error("Error adding document for: ", item.name, error))
+        }
+      );
+      
     } catch (error) {
       switch (error.code) {
         case "auth/invalid-email":
