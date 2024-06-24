@@ -1,19 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Date from "./CurrentDate";
-import SleepGoalDisplay from "./SleepGoalDisplay";
-import PointsDisplay from "./PointsDisplay";
 import CurrentDate from "./CurrentDate";
+import SleepGoalDisplay from "./SleepGoalDisplay";
 
 const TopBar = () => {
   return (
-    <View className="flex-row h-24">
-      <View className="w-2/3 flex-col justify-center">
-        <CurrentDate />
-        <SleepGoalDisplay />
+    <View style={styles.main}>
+      <View style={styles.dateContainer}>
+        <CurrentDate/>
       </View>
-      <View className="w-1/3 flex-col justify-center items-center">
-        <PointsDisplay />
+      <View style={styles.goalContainer}>
+        <SleepGoalDisplay /> 
       </View>
     </View>
   );
@@ -21,4 +18,17 @@ const TopBar = () => {
 
 export default TopBar;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  main: {
+    flexDirection: "row", 
+    height: 100,
+  },
+  dateContainer: {
+    flex: 1,
+    width: "50%",  
+    alignItems: "flex-start"
+  },
+  goalContainer: {
+    flex: 1,
+  }
+});

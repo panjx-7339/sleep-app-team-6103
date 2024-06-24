@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, ImageBackground, View } from "react-native";
 import { React, useState, useEffect } from "react";
 import Cat from "./components/Cat";
 import TopBar from "./components/TopBar";
@@ -21,19 +21,22 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <LinearGradient
-      colors={["#0B0B19", "#6C6CB3"]}
-      style={styles.linearGradient}
-      locations={[0, 0.7]}
-    >
-      <SafeAreaView>
-        <View className="h-full flex-1">
-          <TopBar />
-          <Cat />
-          <NavigationTab />
-        </View>
-      </SafeAreaView>
-    </LinearGradient>
+    <View style={styles.container}> 
+      <ImageBackground 
+          source={require("../../../assets/background.png")}
+          resizeMode="cover"
+          style={styles.background}
+      >
+        <SafeAreaView style={styles.container}>
+          <View className="h-full w-full flex-1">
+            <TopBar />
+            <Cat />
+            <NavigationTab />
+          </View> 
+        </SafeAreaView>
+      </ImageBackground>
+    </View>
+    
   );
 };
 
@@ -42,9 +45,12 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
+  },
+  background: {
+    flex: 1, 
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
   },
   linearGradient: {
     flex: 1,

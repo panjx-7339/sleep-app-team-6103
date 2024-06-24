@@ -66,7 +66,7 @@ const SleepGoalDisplay = () => {
   };
 
   return (
-    <View>
+    <View className="flex-1 w-full h-full items-end">
       <Modal
         animationType="fade"
         transparent={true}
@@ -109,10 +109,10 @@ const SleepGoalDisplay = () => {
       </Modal>
 
       <TouchableOpacity
-        className=" bg-blue-800 mt-1 border-2 border-gray-500 px-1 py-1 rounded-lg w-2/3"
+        style={styles.goalButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text className="text-center text-white">
+        <Text className="text-center text-white text-xs">
           Today's Goal: {sleepGoal ? `${sleepGoal} hours` : "Not Set"}
         </Text>
       </TouchableOpacity>
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "80%",
-    // height: "20%"
   },
   inputContainer: {
     backgroundColor: "#fff",
@@ -162,4 +161,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: "1%",
   },
+  goalButton: {
+    backgroundColor: "#38387F", 
+    width: "80%",
+    borderRadius: 10,
+    marginTop: 30,
+    marginRight: 30,
+    padding: 10,
+  }
 });
