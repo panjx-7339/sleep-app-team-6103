@@ -54,7 +54,6 @@ const AddSleepSession = () => {
       const userDoc = await userDocRef.get();
       const userData = userDoc.data();
       const goal = userData.sleepGoal;
-      console.log(goal);
       let points = 0;
       points = durationInHours >= goal ? 15 : 5;
       const metGoal = durationInHours >= goal;
