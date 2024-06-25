@@ -1,9 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import ItemImages from "./ItemImages";
 
 import { auth, db } from "../../../firebase/config";
 
 const Item = (props) => {
+  const itemImage = ItemImages[props.name];
+
   // handles buying of item when button is pressed
   const handleBuyItem = async () => {
     try {
@@ -57,7 +60,10 @@ const Item = (props) => {
       <View style={styles.title}>
         <Text style={styles.largeText}>{props.name}</Text>
       </View>
-      <View className="flex-1 w-full items-center justify-end">
+      <View style={styles.imageContainer}>
+        <Image source={itemImage} style={{width: 150, height: 150}}/>
+      </View>
+      <View className="w-full items-center justify-end">
         <TouchableOpacity style={styles.button} onPress={handleBuyItem}>
           <Text style={styles.smallText}>{props.points} points</Text>
         </TouchableOpacity>
@@ -87,9 +93,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    width: 100,
-    height: 100,
+  imageContainer: {
+    flex: 1, 
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     backgroundColor: "#fff",
