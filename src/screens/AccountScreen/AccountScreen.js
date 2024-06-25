@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import NavigationTab from "../../components/NavigationTab/NavigationTab";
-import Background from "../../components/Background";
-import SignOutButton from "./components/SignOutButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import NavigationTab from "../../components/NavigationTab/NavigationTab";
+import SignOutButton from "./components/SignOutButton";
 
 const AccountScreen = () => {
   return (

@@ -1,5 +1,6 @@
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
+
 import { auth, db } from "../../../firebase/config";
 import Item from "./Item";
 
@@ -8,13 +9,10 @@ const ShopList = () => {
 
   const user = auth.currentUser;
   const uid = user.uid;
-  
+
   useEffect(() => {
     if (uid) {
-      const userShopRef = db
-      .collection("users")
-      .doc(uid)
-      .collection("shop");
+      const userShopRef = db.collection("users").doc(uid).collection("shop");
 
       const unsubscribe = userShopRef.onSnapshot((snapshot) => {
         const shopItems = {};
@@ -29,22 +27,20 @@ const ShopList = () => {
 
   return (
     <ScrollView>
-      {items && 
+      {items &&
         Object.keys(items).map((key) => (
-        <Item 
-          key={key} 
-          name={items[key].name} 
-          points={items[key].points}
-          isBought={items[key].isBought}
-          isEquipped={items[key].isEquipped}
-        />
-      ))}
+          <Item
+            key={key}
+            name={items[key].name}
+            points={items[key].points}
+            isBought={items[key].isBought}
+            isEquipped={items[key].isEquipped}
+          />
+        ))}
     </ScrollView>
   );
 };
 
 export default ShopList;
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});

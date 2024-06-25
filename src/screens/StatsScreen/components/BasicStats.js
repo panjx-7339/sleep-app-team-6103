@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+
 import BasicStatsComponent from "./BasicStatsComponent";
 
 const BasicStats = (props) => {
@@ -22,7 +23,7 @@ const BasicStats = (props) => {
     const average = (arr) => {
       let sum = 0;
       let counter = 0;
-      for (i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr.length; i++) {
         sum = arr[i] + sum;
         if (arr[i] != 0) {
           counter++;

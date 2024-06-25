@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 
 const Prediction = (props) => {
   const goal = props.goal;
@@ -23,11 +23,11 @@ const Prediction = (props) => {
     }
     const todayDay = today.getDay();
 
-    counter = todayDay;
+    let counter = todayDay;
 
     const daySuccessCount = Array(7).fill(0);
     const dayTotalCount = Array(7).fill(0);
-    for (i = 0; i < pastDays.length; i++) {
+    for (let i = 0; i < pastDays.length; i++) {
       if (pastDays[i] != 0) {
         if (pastDays[i] >= goal) {
           daySuccessCount[counter]++;
@@ -53,7 +53,7 @@ const Prediction = (props) => {
       "Friday",
       "Saturday",
     ];
-    for (i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) {
       if (dayTotalCount[i] == 0) {
         daySuccessRate[i] = [2, days[i]];
       } else {
@@ -61,9 +61,6 @@ const Prediction = (props) => {
       }
     }
     daySuccessRate.sort((a, b) => a[0] - b[0]);
-    //console.log("Success Count: ", daySuccessCount);
-    //console.log("Total Count: ", dayTotalCount);
-    //console.log("Success Rate: ", daySuccessRate);
 
     return `You are most likely to miss your sleep goal on ${daySuccessRate[0][1]}, ${daySuccessRate[1][1]} and ${daySuccessRate[2][1]}`;
   };

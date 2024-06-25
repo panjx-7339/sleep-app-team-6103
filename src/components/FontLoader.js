@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 
 const FontLoader = ({ children }) => {

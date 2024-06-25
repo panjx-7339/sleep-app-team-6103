@@ -1,18 +1,12 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
+
+import { auth, db } from "../../firebase/config";
 import Graph from "./components/Graph";
 import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import Background from "../../components/Background";
-import { auth, db } from "../../firebase/config";
 import BasicStats from "./components/BasicStats";
 import Prediction from "./components/Prediction";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const StatsScreen = () => {
   const [uid, setUid] = useState();
@@ -103,10 +97,5 @@ const styles = StyleSheet.create({
   container: {
     width: "90%",
     justifyContent: "space-between",
-  },
-  title: {
-    fontFamily: "K2D",
-    color: "#fff",
-    fontSize: 24,
   },
 });

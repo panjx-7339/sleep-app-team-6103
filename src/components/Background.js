@@ -1,4 +1,4 @@
-import { StyleSheet, KeyboardAvoidingView, Platform, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -1,16 +1,10 @@
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+
 import Logo from "../../components/Logo";
 import LoginButton from "../../components/LoginButton";
 import Redirect from "../../components/Redirect";
 import LoginInput from "../../components/LoginInput";
-import { LinearGradient } from "expo-linear-gradient";
 import AuthBackground from "../../components/AuthBackground";
 
 const RegistrationScreen = () => {

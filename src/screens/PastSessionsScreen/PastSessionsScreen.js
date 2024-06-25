@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SleepSessionList from "./components/SleepSessionList";
 import AddSleepSession from "./components/AddSleepSession";

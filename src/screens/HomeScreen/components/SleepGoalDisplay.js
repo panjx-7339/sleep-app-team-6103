@@ -9,6 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { React, useState, useEffect } from "react";
+
 import { auth, db } from "../../../firebase/config";
 
 const SleepGoalDisplay = () => {

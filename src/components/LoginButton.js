@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { auth, db } from "../firebase/config";
 import { useNavigation } from "@react-navigation/native";
+
+import { auth, db } from "../firebase/config";
 import ShopItems from "./ShopItems";
 
 const LoginButton = (props) => {

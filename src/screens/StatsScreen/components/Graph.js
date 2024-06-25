@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Dimensions, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import React from "react";
-import { auth, db } from "../../../firebase/config";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BarChart } from "react-native-chart-kit";
+
 import SelectDays from "./SelectDays";
 
 const Graph = (props) => {
@@ -15,7 +15,7 @@ const Graph = (props) => {
     const xAxis = [];
     let counter = daysShown - 1;
     for (i = 0; i < daysShown; i++) {
-      newDate = new Date(today - i * 86400000);
+      const newDate = new Date(today - i * 86400000);
       const day = String(newDate.getDate());
       const month = String(newDate.getMonth() + 1);
       xAxis[counter] = `${day}/${month}`;

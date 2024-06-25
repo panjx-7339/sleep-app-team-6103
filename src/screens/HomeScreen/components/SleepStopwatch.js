@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
-import StopwatchButton from "./StopwatchButton";
-import { Stopwatch, Timer } from "react-native-stopwatch-timer";
+import { Stopwatch } from "react-native-stopwatch-timer";
 import { FontAwesome } from "@expo/vector-icons";
 import { auth, db } from "../../../firebase/config";
 

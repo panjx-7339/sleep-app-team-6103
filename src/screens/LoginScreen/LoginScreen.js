@@ -1,14 +1,8 @@
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  View,
-  Platform,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { auth } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
+
+import { auth } from "../../firebase/config";
 import Logo from "../../components/Logo";
 import LoginInput from "../../components/LoginInput";
 import ForgotPasswordButton from "./components/ForgotPasswordButton";

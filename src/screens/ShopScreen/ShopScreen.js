@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import NavigationTab from "../../components/NavigationTab/NavigationTab";
-import Background from "../../components/Background";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import ShopList from "./components/ShopList";
 import PointsDisplay from "./components/PointsDisplay";
 
@@ -20,7 +20,7 @@ const ShopScreen = () => {
             <PointsDisplay />
           </View>
           <View style={styles.scrollView}>
-            <ShopList/>
+            <ShopList />
           </View>
           <NavigationTab />
         </View>
@@ -34,7 +34,7 @@ export default ShopScreen;
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
-    width: "100%"
+    width: "100%",
   },
   main: {
     flex: 1,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   header: {
     marginHorizontal: 20,
     marginTop: 10,
-    flexDirection: "row", 
+    flexDirection: "row",
     alignItems: "center",
   },
   title: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1D3573",
     marginTop: 10,
-    marginBottom: 90, 
+    marginBottom: 90,
     marginHorizontal: 20,
   },
 });
