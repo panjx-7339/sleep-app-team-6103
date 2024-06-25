@@ -32,7 +32,7 @@ const LoginButton = (props) => {
     try {
       if (props.password !== props.confirmPassword) {
         alert("Passwords entered do not match");
-        return; 
+        return;
       }
       const userCredential = await auth.createUserWithEmailAndPassword(
         props.email,
@@ -44,26 +44,27 @@ const LoginButton = (props) => {
         email: userCredential.user.email,
         sleepGoal: 8,
         points: 0,
+        isSleeping: false,
       };
       await db.collection("users").doc(userCredential.user.uid).set(userInfo);
       navigation.navigate("Home");
 
       const userShopRef = db
-      .collection("users")
-      .doc(userCredential.user.uid)
-      .collection("shop");
-      
+        .collection("users")
+        .doc(userCredential.user.uid)
+        .collection("shop");
+
       Object.entries(ShopItems).forEach(([name, item]) => {
         userShopRef
           .doc(name)
           .set(item)
           .then(() => {
-            console.log("Document successfully written for: ", name)
+            console.log("Document successfully written for: ", name);
           })
-          .catch((error) => console.error("Error adding document for: ", name, error))
-        }
-      );
-      
+          .catch((error) =>
+            console.error("Error adding document for: ", name, error)
+          );
+      });
     } catch (error) {
       switch (error.code) {
         case "auth/invalid-email":

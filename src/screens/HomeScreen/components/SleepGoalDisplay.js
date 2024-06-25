@@ -12,34 +12,24 @@ import { React, useState, useEffect } from "react";
 import { auth, db } from "../../../firebase/config";
 
 const SleepGoalDisplay = () => {
-  const [uid, setUid] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [input, onChangeInput] = useState("");
   const [sleepGoal, setSleepGoal] = useState();
 
-  useEffect(() => {
-    // Get current user id
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-        fetchSleepGoal(user.uid);
-      }
-    });
-    return unsubscribe;
-  }, []);
+  const user = auth.currentUser;
+  const uid = user.uid;
 
-  const fetchSleepGoal = async (uid) => {
-    // Fetch sleepGoal from firestore database and update sleepGoal
-    try {
-      const userDoc = await db.collection("users").doc(uid).get();
-      if (userDoc.exists) {
-        const userData = userDoc.data();
-        setSleepGoal(userData.sleepGoal);
-      }
-    } catch (error) {
-      console.error("Error fetching sleep goal from database: ", error);
+  useEffect(() => {
+    if (uid) {
+      const userDocRef = db.collection("users").doc(uid);
+      const unsubscribe = userDocRef.onSnapshot((doc) => {
+        const sleepGoal = doc.data().sleepGoal;
+        setSleepGoal(sleepGoal);
+        console.log("Sleep goal set: ", sleepGoal);
+      });
+      return unsubscribe;
     }
-  };
+  }, [uid]);
 
   const addSleepGoal = async () => {
     if (uid) {
@@ -55,7 +45,6 @@ const SleepGoalDisplay = () => {
         await db.collection("users").doc(uid).update({
           sleepGoal: userInput,
         });
-        setSleepGoal(userInput);
         console.log("Sleep goal updated for user ID: ", uid);
       } catch (error) {
         console.error("Error updating sleep goal: ", error);
@@ -162,11 +151,11 @@ const styles = StyleSheet.create({
     padding: "1%",
   },
   goalButton: {
-    backgroundColor: "#38387F", 
+    backgroundColor: "#38387F",
     width: "80%",
     borderRadius: 10,
     marginTop: 30,
     marginRight: 30,
     padding: 10,
-  }
+  },
 });

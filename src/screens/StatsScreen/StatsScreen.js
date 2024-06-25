@@ -34,27 +34,39 @@ const StatsScreen = () => {
   const [sessions, setSessions] = useState();
   const [goal, setGoal] = useState();
 
-  const initializeSessions = async () => {
-    if (uid) {
-      const querySnapshot = await userSessionsRef
-        .orderBy("start", "desc")
-        .get();
-      const userSessions = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        start: doc.data().start.toDate(),
-        end: doc.data().end.toDate(),
-        durationInHours: doc.data().durationInHours,
-      }));
-      setSessions(userSessions);
-      const userDoc = await userDocRef.get();
-      const userData = userDoc.data();
-      setGoal(userData.sleepGoal);
-    }
-  };
   useEffect(() => {
-    initializeSessions();
-  }, [uid]);
+    if (!uid) return;
 
+    const userSessionsRef = db
+      .collection("users")
+      .doc(uid)
+      .collection("sessions");
+    const userDocRef = db.collection("users").doc(uid);
+
+    const getSessions = userSessionsRef
+      .orderBy("start", "desc")
+      .onSnapshot((querySnapshot) => {
+        const userSessions = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          start: doc.data().start.toDate(),
+          end: doc.data().end.toDate(),
+          durationInHours: doc.data().durationInHours,
+        }));
+        setSessions(userSessions);
+      });
+
+    const getGoal = userDocRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const userData = doc.data();
+        setGoal(userData.sleepGoal);
+      }
+    });
+
+    return () => {
+      getSessions();
+      getGoal();
+    };
+  }, [uid]);
   return (
     <Background>
       <View style={styles.main}>

@@ -3,6 +3,9 @@ import React from "react";
 
 const Cat = (props) => {
   const getCat = () => {
+    if (props.isSleeping) {
+      return require("../../../../assets/sleeping-cat.png");
+    }
     const today = new Date();
     today.setHours(23);
     today.setMinutes(59);
@@ -20,8 +23,8 @@ const Cat = (props) => {
         }
       });
     console.log(pastDays);
-    if (pastDays[0] === 0 && pastDays[1] < props.goal) {
-      return require("../../../../assets/sad-cat.png");
+    if (pastDays[0] === 0 && pastDays[1] >= props.goal) {
+      return require("../../../../assets/happy-cat.png");
     } else if (pastDays[0] >= props.goal) {
       return require("../../../../assets/happy-cat.png");
     } else {
@@ -32,10 +35,16 @@ const Cat = (props) => {
   const catImage = getCat();
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View style={styles.container}>
       <Image source={catImage} style={{ width: 300, height: 300 }} />
     </View>
   );
 };
 export default Cat;
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

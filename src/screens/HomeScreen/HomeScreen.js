@@ -8,17 +8,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { auth, db } from "../../firebase/config";
 import StopwatchButton from "./components/StopwatchButton";
 import Background from "../../components/Background";
+import SleepStopwatch from "./components/SleepStopwatch";
 
 const HomeScreen = () => {
-  const [uid, setUid] = useState();
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-      }
-    });
-    return unsubscribe;
-  }, []);
+  const user = auth.currentUser;
+  const uid = user.uid;
 
   const userSessionsRef = db
     .collection("users")
@@ -28,26 +22,41 @@ const HomeScreen = () => {
 
   const [sessions, setSessions] = useState();
   const [goal, setGoal] = useState();
+  const [isSleeping, setIsSleeping] = useState();
 
-  const initializeSessions = async () => {
-    if (uid) {
-      const querySnapshot = await userSessionsRef
-        .orderBy("start", "desc")
-        .get();
-      const userSessions = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        start: doc.data().start.toDate(),
-        end: doc.data().end.toDate(),
-        durationInHours: doc.data().durationInHours,
-      }));
-      setSessions(userSessions);
-      const userDoc = await userDocRef.get();
-      const userData = userDoc.data();
-      setGoal(userData.sleepGoal);
-    }
-  };
   useEffect(() => {
-    initializeSessions();
+    if (!uid) return;
+
+    const userSessionsRef = db
+      .collection("users")
+      .doc(uid)
+      .collection("sessions");
+    const userDocRef = db.collection("users").doc(uid);
+
+    const getSessions = userSessionsRef
+      .orderBy("start", "desc")
+      .onSnapshot((querySnapshot) => {
+        const userSessions = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          start: doc.data().start.toDate(),
+          end: doc.data().end.toDate(),
+          durationInHours: doc.data().durationInHours,
+        }));
+        setSessions(userSessions);
+      });
+
+    const getData = userDocRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const userData = doc.data();
+        setGoal(userData.sleepGoal);
+        setIsSleeping(userData.isSleeping);
+      }
+    });
+
+    return () => {
+      getSessions();
+      getData();
+    };
   }, [uid]);
 
   return (
@@ -60,7 +69,10 @@ const HomeScreen = () => {
         <SafeAreaView style={styles.container}>
           <View className="h-full w-full flex-1">
             <TopBar />
-            <Cat sessions={sessions} goal={goal} />
+            <View style={styles.stopwatchContainer}>
+              <SleepStopwatch />
+            </View>
+            <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
             <NavigationTab />
           </View>
         </SafeAreaView>
@@ -86,5 +98,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+  },
+  stopwatchContainer: {
+    marginTop: 20,
   },
 });
