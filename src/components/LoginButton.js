@@ -53,15 +53,14 @@ const LoginButton = (props) => {
       .doc(userCredential.user.uid)
       .collection("shop");
       
-      const docRef = await ShopItems.forEach(
-        ([name, item]) => {
-          userShopRef
+      Object.entries(ShopItems).forEach(([name, item]) => {
+        userShopRef
           .doc(name)
           .set(item)
           .then(() => {
-            console.log("Document successfully written for: ", item.name)
+            console.log("Document successfully written for: ", name)
           })
-          .catch((error) => console.error("Error adding document for: ", item.name, error))
+          .catch((error) => console.error("Error adding document for: ", name, error))
         }
       );
       
