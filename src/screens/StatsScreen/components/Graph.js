@@ -54,7 +54,8 @@ const Graph = (props) => {
         height={300}
         yAxisInterval={1}
         verticalLabelRotation={-80}
-        showValuesOnTopOfBars={true}
+        showValuesOnTopOfBars={false}
+        fromZero={true}
         chartConfig={{
           backgroundGradientFrom: "#6C6CB3",
           backgroundGradientTo: "#6C6CB3",
