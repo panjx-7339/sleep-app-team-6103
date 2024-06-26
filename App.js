@@ -11,6 +11,7 @@ import PastSessionsScreen from "./src/screens/PastSessionsScreen/PastSessionsScr
 import StatsScreen from "./src/screens/StatsScreen/StatsScreen";
 import AccountScreen from "./src/screens/AccountScreen/AccountScreen";
 import FontLoader from "./src/components/FontLoader";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {

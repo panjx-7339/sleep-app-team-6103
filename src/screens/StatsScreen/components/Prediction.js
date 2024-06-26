@@ -18,7 +18,14 @@ const Prediction = (props) => {
         }
         pastDays[index] += session.durationInHours;
       });
-    if (pastDays.length < 8) {
+
+    let sessionsLogged = 0;
+    for (let i = 0; i < pastDays.length; i++) {
+      if (pastDays[i] > 0) {
+        sessionsLogged++;
+      }
+    }
+    if (sessionsLogged < 8) {
       return "Track more than 7 days to see when you are most likely to miss your sleep goal.";
     }
     const todayDay = today.getDay();
