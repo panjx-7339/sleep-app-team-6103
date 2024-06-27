@@ -70,7 +70,9 @@ const HomeScreen = () => {
             <View style={styles.stopwatchContainer}>
               <SleepStopwatch />
             </View>
-            <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
+            <View className="items-center justify-center">
+              <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
+            </View>
             <NavigationTab />
           </View>
         </SafeAreaView>
@@ -98,6 +100,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   stopwatchContainer: {
-    marginTop: 20,
+    marginTop: "10%",
   },
 });
