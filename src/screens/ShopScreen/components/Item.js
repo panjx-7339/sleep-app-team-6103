@@ -1,59 +1,46 @@
-import React from "react";
+import { React, useState, useEffect }from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-import ItemImages from "./ItemImages";
 
 import { auth, db } from "../../../firebase/config";
+import ItemImages from "./ItemImages";
+import ItemButton from "./ItemButton";
 
 const Item = (props) => {
-  const itemImage = ItemImages[props.name];
+  const [isBought, setisBought] = useState(false);
+  const [isEquipped, setisEquipped] = useState(false);
+  
+  const user = auth.currentUser;
+  const uid = user.uid;
 
-  // handles buying of item when button is pressed
-  const handleBuyItem = async () => {
-    try {
-      const user = auth.currentUser;
-      const uid = user.uid;
-      if (uid) {
-        const userDocRef = db.collection("users").doc(uid);
-        const itemPoints = props.points;
-        const itemName = props.name;
-        const isBought = props.isBought;
+  useEffect(() => {
+    if (uid) {
+      const shopRef = db.collection("users").doc(uid).collection("shop");
+      const shopItemDoc = shopRef.doc(props.itemKey);
 
-        // Get current points of user
-        const userDoc = await userDocRef.get();
-        const userPoints = userDoc.data().points;
+      const unsubscribe = shopItemDoc.onSnapshot(
+        (shopItemDoc) => {
+          const itemData = shopItemDoc.data();
+          if (itemData) { 
+            const newIsBought = itemData.isBought;
+            const newIsEquipped = itemData.isEquipped;
+            
+            setisBought(newIsBought);
+            setisEquipped(newIsEquipped);
 
-        if (isBought) {
-          console.log("Item already bought");
-        } else if (userPoints >= props.points) {
-          // Deduct points
-          const updatedPoints = userPoints - itemPoints;
-          await userDocRef
-            .update({
-              points: updatedPoints,
-            })
-            .then(console.log("Points successfully updated for", itemName))
-            .catch((error) => {
-              console.error("Error updating points for", itemName, error);
-            });
-
-          // Update item as bought
-          const itemDocRef = userDocRef.collection("shop").doc(itemName);
-          await itemDocRef
-            .update({
-              isBought: true,
-            })
-            .then(console.log(`${itemName} successfully bought!`))
-            .catch((error) => {
-              console.error("Error updating isBought for", itemName, error);
-            });
-        } else {
-          console.log("Not enough points to purchase this item");
+            console.log(`${props.name}: 
+              isBought: ${newIsBought}, 
+              isEquipped: ${newIsEquipped}`);
+          }
+        },
+        (error) => {
+          console.error("Error fetching item data: ", error);
         }
-      }
-    } catch (error) {
-      console.error("Error buying item: ", error);
+      );
+      return () => unsubscribe();
     }
-  };
+  }, [uid]);
+
+  const itemImage = ItemImages[props.name];
 
   return (
     <View style={styles.container}>
@@ -63,11 +50,12 @@ const Item = (props) => {
       <View style={styles.imageContainer}>
         <Image source={itemImage} style={{width: 150, height: 150}}/>
       </View>
-      <View className="w-full items-center justify-end">
-        <TouchableOpacity style={styles.button} onPress={handleBuyItem}>
-          <Text style={styles.smallText}>{props.points} points</Text>
-        </TouchableOpacity>
-      </View>
+      <ItemButton 
+        name={props.name}
+        points={props.points}
+        isBought={isBought}
+        isEquipped={isEquipped}
+      />
     </View>
   );
 };
@@ -98,23 +86,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  button: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    width: "30%",
-    height: 30,
-    marginBottom: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   largeText: {
     fontFamily: "K2D",
     fontSize: 20,
     color: "#fff",
-  },
-  smallText: {
-    fontFamily: "K2D",
-    fontSize: 15,
-    color: "#000",
   },
 });
