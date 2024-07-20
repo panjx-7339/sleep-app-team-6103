@@ -54,7 +54,7 @@ const SleepSessionList = () => {
         {sessions &&
           sessions.map((sess) => (
             <Session
-              key={sess.id}
+              sessId={sess.id}
               start={sess.startString}
               end={sess.endString}
               duration={sess.durationInHours}

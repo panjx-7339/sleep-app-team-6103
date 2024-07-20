@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import DeleteButton from "./DeleteButton";
 
 const Session = (props) => {
   const formatTime = (dateInput) => {
@@ -43,6 +44,7 @@ const Session = (props) => {
       <View style={styles.durationBox}>
         <Text style={styles.duration}>{duration} h</Text>
       </View>
+      <DeleteButton sessId={props.sessId} />
     </View>
   );
 };
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   times: {
-    flex: 6,
+    flex: 4.5,
     justifyContent: "flex-start",
   },
   text: {
