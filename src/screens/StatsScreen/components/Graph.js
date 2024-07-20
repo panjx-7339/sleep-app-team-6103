@@ -12,7 +12,7 @@ const Graph = (props) => {
     const today = new Date();
     today.setHours(23);
     today.setMinutes(59);
-    const xAxis = [];
+    let xAxis = [];
     let counter = daysShown - 1;
     for (i = 0; i < daysShown; i++) {
       const newDate = new Date(today - i * 86400000);
@@ -29,6 +29,13 @@ const Graph = (props) => {
           daysShown - 1 - Math.floor((today - session.end) / 86400000);
         yAxis[index] += session.durationInHours;
       });
+    if (daysShown === 30) {
+      for (let j = 0; j < 30; j++) {
+        if (j % 7 != 0) {
+          xAxis[j] = "";
+        }
+      }
+    }
     return {
       labels: xAxis,
       datasets: [
@@ -39,7 +46,7 @@ const Graph = (props) => {
     };
   };
   const sleepData = processData(daysShown);
-  const barSize = daysShown === 7 ? 1 : 0.5;
+  const barSize = daysShown === 7 ? 1 : 0.3;
 
   return (
     <View style={styles.container}>
