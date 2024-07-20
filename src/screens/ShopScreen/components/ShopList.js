@@ -9,7 +9,8 @@ const ShopList = () => {
 
   const user = auth.currentUser;
   const uid = user.uid;
-
+  // firestore listener is set up twice for Lights
+  
   useEffect(() => {
     if (uid) {
       const shopRef = db.collection("users").doc(uid).collection("shop");
@@ -21,7 +22,7 @@ const ShopList = () => {
         });
         setItems(shopItems);
       });
-      return unsubscribe;
+      return () => unsubscribe();
     }
   }, [uid]);
 

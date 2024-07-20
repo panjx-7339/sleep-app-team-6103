@@ -1,9 +1,10 @@
-import { StyleSheet, ImageBackground, View } from "react-native";
+import { StyleSheet, ImageBackground, View, Text } from "react-native";
 import { React, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Cat from "./components/Cat";
 import TopBar from "./components/TopBar";
+import Lights from "./components/items/Lights";
 import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import { auth, db } from "../../firebase/config";
 import SleepStopwatch from "./components/SleepStopwatch";
@@ -70,8 +71,14 @@ const HomeScreen = () => {
             <View style={styles.stopwatchContainer}>
               <SleepStopwatch />
             </View>
-            <View className="items-center justify-center">
+            <View style={styles.lightsContainer}>
+              <Lights />
+            </View>
+            <View style={styles.catContainer}>
               <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
+            </View>
+            <View style={styles.itemsContainer}>
+              
             </View>
             <NavigationTab />
           </View>
@@ -101,5 +108,18 @@ const styles = StyleSheet.create({
   },
   stopwatchContainer: {
     marginTop: "10%",
+    flex: 1,
+  },
+  lightsContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  catContainer: {
+    justifyContent: "center", 
+    alignItems: "center",
+    flex: 3,
+  }, 
+  itemsContainer: {
+    flex: 3,
   },
 });

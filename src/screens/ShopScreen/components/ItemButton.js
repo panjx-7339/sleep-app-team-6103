@@ -13,6 +13,49 @@ const ItemButton = (props) => {
   const user = auth.currentUser;
   const uid = user.uid;
   
+  const userDocRef = db.collection("users").doc(uid);
+  const itemDocRef = userDocRef.collection("shop").doc(itemName);
+
+  const handleEquipItem = async () => {
+    try {
+      if (uid) {
+        // update item as equipped
+        await itemDocRef
+          .update({
+            isEquipped: true,
+          })
+          .then(() => {
+            alert(`${itemName} successfully equipped!`)
+          })
+          .catch((error) => {
+            console.error("Error equipping", itemName, error);
+          });
+      }
+  } catch (error) {
+    console.log("Error equipping item: ", error);
+    }
+  };
+
+  const handleUnequipItem = async () => {
+    try {
+      if (uid) {
+        // update item as unequipped
+        await itemDocRef
+          .update({
+            isEquipped: false,
+          })
+          .then(() => {
+            alert(`${itemName} successfully unequipped!`)
+          })
+          .catch((error) => {
+            console.error("Error unequipping", itemName, error);
+          });
+      }
+  } catch (error) {
+    console.log("Error unequipping item: ", error);
+    }
+  };
+
   // handles buying of item when confirm button is pressed
   const handleBuyItem = async () => {
     try {
@@ -36,7 +79,6 @@ const ItemButton = (props) => {
             });
 
           // Update item as bought
-          const itemDocRef = userDocRef.collection("shop").doc(itemName);
           await itemDocRef
             .update({
               isBought: true,
@@ -64,14 +106,17 @@ const ItemButton = (props) => {
 
   if (isBought && isEquipped) {
     buttonText = 'Unequip';
+    onPressHandler = handleUnequipItem;
+    buttonStyle = [styles.button, {backgroundColor: "#FFA077"}];
   }
   else if (isBought) {
     buttonText = 'Equip';
+    onPressHandler = handleEquipItem;
     buttonStyle = [styles.button, {backgroundColor: "#FFCA28"}];
   }
   else {
     buttonText = `${itemPoints} points`;
-    onPressHandler = () => setModalVisible(true); // sus
+    onPressHandler = () => setModalVisible(true); 
     buttonStyle = styles.button;
   }
 

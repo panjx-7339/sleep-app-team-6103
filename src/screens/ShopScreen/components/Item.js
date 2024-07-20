@@ -14,6 +14,8 @@ const Item = (props) => {
 
   useEffect(() => {
     if (uid) {
+      console.log(`Setting up Firestore listener for ${props.name}`);
+
       const shopRef = db.collection("users").doc(uid).collection("shop");
       const shopItemDoc = shopRef.doc(props.itemKey);
 
@@ -36,9 +38,12 @@ const Item = (props) => {
           console.error("Error fetching item data: ", error);
         }
       );
-      return () => unsubscribe();
+      return () => {
+        console.log(`Cleaning up Firestore listener for ${props.name}`);
+        unsubscribe();
+      };
     }
-  }, [uid]);
+  }, [uid, props.itemKey]);
 
   const itemImage = ItemImages[props.name];
 
