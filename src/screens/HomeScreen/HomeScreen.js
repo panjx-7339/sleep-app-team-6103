@@ -76,11 +76,14 @@ const HomeScreen = () => {
               <Lights />
             </View>
             <View style={styles.catContainer}>
+              <View style={styles.catItem}>
+                <FloorItem name="Bed" width={290} height={160} />  
+              </View>
               <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
             </View>
             <View style={styles.itemsContainer}>
-              <FloorItem name="Bowl" />
-              <FloorItem name="Mouse Toy" />
+              <FloorItem name="Bowl" width={150} height={200} />
+              <FloorItem name="Mouse Toy" width={150} height={200}/>
             </View>
             <NavigationTab />
           </View>
@@ -111,22 +114,31 @@ const styles = StyleSheet.create({
   stopwatchContainer: {
     flex: 1,
     marginTop: "10%",
-    zIndex: 1,
+    zIndex: 5,
   },
   lightsContainer: {
     flex: 1,
     justifyContent: "center",
     zIndex: 0,
+    //backgroundColor: "red"
   },
   catContainer: {
     flex: 3,
     justifyContent: "center", 
     alignItems: "center",
     zIndex: 1,
+    paddingBottom: "20%"
   }, 
+  catItem: {
+    position: "absolute", 
+    bottom: "0%",
+    justifyContent: "center", 
+    alignItems: "center",
+  },
   itemsContainer: {
     flex: 3,
     flexDirection: "row",
     justifyContent: "center",
+    marginBottom: "5%"
   },
 });

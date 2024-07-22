@@ -9,7 +9,6 @@ const ShopList = () => {
 
   const user = auth.currentUser;
   const uid = user.uid;
-  // firestore listener is set up twice for Lights
   
   useEffect(() => {
     if (uid) {

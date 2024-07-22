@@ -8,6 +8,9 @@ const FloorItem = (props) => {
   const [isEquipped, setIsEquipped] = useState(false);
   
   const itemName = props.name;
+  const width = props.width;
+  const height = props.height;
+
   const user = auth.currentUser;
   const uid = user.uid;
 
@@ -27,8 +30,6 @@ const FloorItem = (props) => {
       }, (error) => {
         console.error("Error fetching document: ", error);
       });
-
-      // Cleanup function to unsubscribe from the Firestore listener
       return () => unsubscribe();
     }
   }, [uid, itemName]);
@@ -47,7 +48,7 @@ const FloorItem = (props) => {
   const bowlImage = getImage();
 
   return (
-    <Image source={bowlImage} style={{ width: 150, height: 200, margin: "5%" }} resizeMode="contain" />
+    <Image source={bowlImage} style={{width: width, height: height, margin: "3%" }} resizeMode="contain" />
   );
 }
 

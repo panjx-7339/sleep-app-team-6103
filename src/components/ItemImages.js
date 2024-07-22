@@ -1,8 +1,8 @@
 const ItemImages = {
   "Bowl": require('../../assets/shopItems/Bowl.png'),
-  "Ball": require('../../assets/shopItems/Ball.png'),
+  "Mouse Toy": require('../../assets/shopItems/Mouse-toy.png'),
   "Lights": require('../../assets/shopItems/Lights.png'),
-  "Mouse Toy": require('../../assets/shopItems/Mouse-toy.png')
+  "Bed": require('../../assets/shopItems/Bed.png'),
 }
 
 export default ItemImages;

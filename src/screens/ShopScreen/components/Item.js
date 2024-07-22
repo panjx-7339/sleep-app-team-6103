@@ -53,7 +53,7 @@ const Item = (props) => {
         <Text style={styles.largeText}>{props.name}</Text>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={itemImage} style={{width: 150, height: 150}}/>
+        <Image source={itemImage} style={{width: 150, height: 150}} resizeMode="contain" />
       </View>
       <ItemButton 
         name={props.name}

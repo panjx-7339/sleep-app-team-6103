@@ -36,14 +36,14 @@ const Cat = (props) => {
 
   return (
     <View style={styles.container}>
-      <Image source={catImage} style={{ width: 300, height: 300 }} />
+      <Image source={catImage} style={{ width: 280, height: 280 }} />
     </View>
   );
 };
 export default Cat;
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    // marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
   },
