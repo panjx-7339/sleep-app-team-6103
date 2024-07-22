@@ -23,12 +23,20 @@ const SleepGoalDisplay = () => {
   useEffect(() => {
     if (uid) {
       const userDocRef = db.collection("users").doc(uid);
-      const unsubscribe = userDocRef.onSnapshot((doc) => {
-        const sleepGoal = doc.data().sleepGoal;
-        setSleepGoal(sleepGoal);
-        console.log("Sleep goal set: ", sleepGoal);
-      });
-      return unsubscribe;
+      const unsubscribe = userDocRef.onSnapshot(
+        (doc) => {
+          const data = doc.data();
+          if (data) {
+            const newSleepGoal = data.sleepGoal;
+            setSleepGoal(newSleepGoal);
+            console.log("Sleep goal set: ", newSleepGoal);
+          }
+        },
+        (error) => {
+          console.error("Error fetching sleep goal: ", error);
+        }
+      );
+      return () => unsubscribe();
     }
   }, [uid]);
 

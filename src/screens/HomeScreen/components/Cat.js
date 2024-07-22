@@ -43,7 +43,7 @@ const Cat = (props) => {
 export default Cat;
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    // marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
   },

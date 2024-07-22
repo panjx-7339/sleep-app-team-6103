@@ -9,19 +9,19 @@ const ShopList = () => {
 
   const user = auth.currentUser;
   const uid = user.uid;
-
+  
   useEffect(() => {
     if (uid) {
-      const userShopRef = db.collection("users").doc(uid).collection("shop");
+      const shopRef = db.collection("users").doc(uid).collection("shop");
 
-      const unsubscribe = userShopRef.onSnapshot((snapshot) => {
+      const unsubscribe = shopRef.onSnapshot((snapshot) => {
         const shopItems = {};
         snapshot.forEach((doc) => {
           shopItems[doc.id] = doc.data();
         });
         setItems(shopItems);
       });
-      return unsubscribe;
+      return () => unsubscribe();
     }
   }, [uid]);
 
@@ -30,7 +30,7 @@ const ShopList = () => {
       {items &&
         Object.keys(items).map((key) => (
           <Item
-            key={key}
+            itemKey={key}
             name={items[key].name}
             points={items[key].points}
             isBought={items[key].isBought}

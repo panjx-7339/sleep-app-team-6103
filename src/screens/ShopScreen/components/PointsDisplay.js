@@ -18,7 +18,7 @@ const PointsDisplay = () => {
         console.log("Points:", points);
         setPoints(points);
       });
-      return unsubscribe;
+      return () => unsubscribe();
     }
   }, [uid]);
 
