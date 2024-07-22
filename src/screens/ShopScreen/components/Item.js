@@ -2,7 +2,7 @@ import { React, useState, useEffect }from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 import { auth, db } from "../../../firebase/config";
-import ItemImages from "./ItemImages";
+import ItemImages from "../../../components/ItemImages";
 import ItemButton from "./ItemButton";
 
 const Item = (props) => {

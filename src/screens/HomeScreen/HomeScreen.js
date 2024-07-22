@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Cat from "./components/Cat";
 import TopBar from "./components/TopBar";
 import Lights from "./components/items/Lights";
+import FloorItem from "./components/items/FloorItem";
 import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import { auth, db } from "../../firebase/config";
 import SleepStopwatch from "./components/SleepStopwatch";
@@ -78,7 +79,8 @@ const HomeScreen = () => {
               <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
             </View>
             <View style={styles.itemsContainer}>
-              
+              <FloorItem name="Bowl" />
+              <FloorItem name="Mouse Toy" />
             </View>
             <NavigationTab />
           </View>
@@ -107,19 +109,24 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   stopwatchContainer: {
-    marginTop: "10%",
     flex: 1,
+    marginTop: "10%",
+    zIndex: 1,
   },
   lightsContainer: {
     flex: 1,
     justifyContent: "center",
+    zIndex: 0,
   },
   catContainer: {
+    flex: 3,
     justifyContent: "center", 
     alignItems: "center",
-    flex: 3,
+    zIndex: 1,
   }, 
   itemsContainer: {
     flex: 3,
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });
