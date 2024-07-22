@@ -4,7 +4,7 @@
     "slug": "sleep-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -17,8 +17,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/app-logo.png",
+        "backgroundColor": "#323258"
       },
       "package": "com.sleepapp6103"
     },
@@ -34,7 +34,7 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/K2D.otf"]
+          "fonts": ["./assets/fonts/K2D.ttf"]
         }
       ]],
     "owner": "maegant"
