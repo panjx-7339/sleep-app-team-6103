@@ -36,7 +36,7 @@ const Cat = (props) => {
 
   return (
     <View style={styles.container}>
-      <Image source={catImage} style={{ width: 280, height: 280 }} />
+      <Image source={catImage} style={{ width: 300, height: 300 }} />
     </View>
   );
 };
