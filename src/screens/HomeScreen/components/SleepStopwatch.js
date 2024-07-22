@@ -5,22 +5,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { auth, db } from "../../../firebase/config";
 
 const SleepStopwatch = () => {
+  //start time, used to create new session
   const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  //tracks whether stopwatch is currently running
   const [isRunning, setIsRunning] = useState(false);
+  //resets stopwatch to 00:00:00, when stopwatch is stopped
   const [reset, setReset] = useState(false);
-
-  const iconSize = 40;
-  const startColor = "#50FF8B";
-  const stopColor = "#FF5C5C";
-
-  const startButton = (
-    <FontAwesome name="play-circle" size={iconSize} color={startColor} />
-  );
-  const stopButton = (
-    <FontAwesome name="stop-circle" size={iconSize} color={stopColor} />
-  );
-  const icon = isRunning ? stopButton : startButton;
+  const [currentTime, setCurrentTime] = useState(null);
 
   const user = auth.currentUser;
   const uid = user.uid;
@@ -31,6 +22,42 @@ const SleepStopwatch = () => {
     .collection("sessions");
   const userDocRef = db.collection("users").doc(uid);
 
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (!uid) return;
+    const userDocRef = db.collection("users").doc(uid);
+    const getData = userDocRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const userData = doc.data();
+        setData(userData);
+        setIsRunning(userData.isSleeping);
+        const start = userData.start.toDate();
+        setStartTime(start);
+        const current = new Date() - start;
+        setCurrentTime(current);
+      }
+    });
+    return () => {
+      getData();
+    };
+  }, [uid]);
+
+  //design of icon
+  const iconSize = 40;
+  const startColor = "#50FF8B";
+  const stopColor = "#FF5C5C";
+
+  const startButton = (
+    <FontAwesome name="play-circle" size={iconSize} color={startColor} />
+  );
+  const stopButton = (
+    <FontAwesome name="stop-circle" size={iconSize} color={stopColor} />
+  );
+
+  const icon = isRunning ? stopButton : startButton;
+
+  //add session
   const addSession = async (start, end) => {
     const durationInHours = (end - start) / (1000 * 60 * 60);
     if (durationInHours < 0) {
@@ -75,12 +102,13 @@ const SleepStopwatch = () => {
   const handlePress = async () => {
     if (isRunning) {
       // press stop - set stop time, create new session, toggle cat sleeping
-      setEndTime(new Date());
       setIsRunning(false);
       setReset(true);
       const update = await userDocRef.update({
         isSleeping: false,
       });
+      console.log(startTime, new Date());
+      setCurrentTime(0);
 
       addSession(startTime, new Date());
     } else {
@@ -89,6 +117,7 @@ const SleepStopwatch = () => {
       setStartTime(new Date());
       const update = await userDocRef.update({
         isSleeping: true,
+        start: new Date(),
       });
     }
   };
@@ -101,7 +130,7 @@ const SleepStopwatch = () => {
 
   return (
     <View style={styles.container}>
-      <Stopwatch start={isRunning} reset={reset} />
+      <Stopwatch start={isRunning} reset={reset} startTime={currentTime} />
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handlePress}>{icon}</TouchableOpacity>
       </View>
