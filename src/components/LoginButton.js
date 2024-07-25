@@ -1,6 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, setDoc, collection } from "firebase/firestore";
 
 import { auth, db } from "../firebase/config";
 import ShopItems from "./ShopItems";
@@ -9,7 +14,7 @@ const LoginButton = (props) => {
   const navigation = useNavigation();
   const handleLogin = async () => {
     try {
-      await auth.signInWithEmailAndPassword(props.email, props.password);
+      await signInWithEmailAndPassword(auth, props.email, props.password);
       navigation.navigate("Home");
     } catch (error) {
       switch (error.code) {
@@ -23,7 +28,7 @@ const LoginButton = (props) => {
           alert("Invalid credentials");
           break;
         default:
-          alert(error.code);
+          alert(error);
           break;
       }
     }
@@ -35,7 +40,8 @@ const LoginButton = (props) => {
         alert("Passwords entered do not match");
         return;
       }
-      const userCredential = await auth.createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
         props.email,
         props.password
       );
@@ -47,24 +53,25 @@ const LoginButton = (props) => {
         points: 0,
         isSleeping: false,
       };
-      await db.collection("users").doc(userCredential.user.uid).set(userInfo);
+
+      await setDoc(doc(db, "users", userCredential.user.uid), userInfo);
       navigation.navigate("Home");
 
-      const userShopRef = db
-        .collection("users")
-        .doc(userCredential.user.uid)
-        .collection("shop");
-
+      const userShopRef = collection(
+        db,
+        "users",
+        userCredential.user.uid,
+        "shop"
+      );
       Object.entries(ShopItems).forEach(([name, item]) => {
-        userShopRef
-          .doc(name)
-          .set(item)
+        const shopDocRef = doc(userShopRef, name);
+        setDoc(shopDocRef, item)
           .then(() => {
             console.log("Document successfully written for: ", name);
           })
-          .catch((error) =>
-            console.error("Error adding document for: ", name, error)
-          );
+          .catch((error) => {
+            console.error("Error adding document for: ", name, error);
+          });
       });
     } catch (error) {
       switch (error.code) {

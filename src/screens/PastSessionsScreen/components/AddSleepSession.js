@@ -1,24 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
+import { collection, doc, addDoc, getDoc, updateDoc } from "firebase/firestore";
+
 import { auth, db } from "../../../firebase/config";
 import Picker from "./Picker";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 const AddSleepSession = () => {
-  const [uid, setUid] = useState();
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-      }
-    });
-  }, []);
-  const userSessionsRef = db
-    .collection("users")
-    .doc(uid)
-    .collection("sessions");
-  const userDocRef = db.collection("users").doc(uid);
+  const user = auth.currentUser;
+  const uid = user.uid;
+
+  const userSessionsRef = collection(db, "users", uid, "sessions");
+  const userDocRef = doc(db, "users", uid);
 
   const handleAddInput = async () => {
     try {
@@ -44,14 +38,14 @@ const AddSleepSession = () => {
         alert("Sleep Session cannot be longer than 24 hours.");
         return;
       }
-      const userDoc = await userDocRef.get();
+      const userDoc = await getDoc(userDocRef);
       const userData = userDoc.data();
       const goal = userData.sleepGoal;
       let points = 0;
       points = durationInHours >= goal ? 15 : 5;
       const metGoal = durationInHours >= goal;
 
-      const docRef = await userSessionsRef.add({
+      const docRef = await addDoc(userSessionsRef, {
         start: start,
         end: end,
         durationInHours: durationInHours,
@@ -61,10 +55,9 @@ const AddSleepSession = () => {
 
       const currentPoints = userData.points;
       const updatedPoints = currentPoints + points;
-      await userDocRef
-        .update({
-          points: updatedPoints,
-        })
+      await updateDoc(userDocRef, {
+        points: updatedPoints,
+      })
         .then(() => {
           console.log("Points successfully updated!");
         })

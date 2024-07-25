@@ -2,32 +2,28 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../../firebase/config";
 import Session from "./Session";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 const SleepSessionList = () => {
-  const [uid, setUid] = useState();
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-      }
-    });
-    return unsubscribe;
-  }, []);
+  const user = auth.currentUser;
+  const uid = user.uid;
 
   const [sessions, setSessions] = useState();
 
   useEffect(() => {
     if (!uid) return;
+    const userSessionsRef = collection(db, "users", uid, "sessions");
+    const userDocRef = doc(db, "users", uid);
 
-    const userSessionsRef = db
-      .collection("users")
-      .doc(uid)
-      .collection("sessions");
-    const userDocRef = db.collection("users").doc(uid);
-
-    const getSessions = userSessionsRef
-      .orderBy("start", "desc")
-      .onSnapshot((querySnapshot) => {
+    const getSessions = onSnapshot(
+      query(userSessionsRef, orderBy("start", "desc")),
+      (querySnapshot) => {
         const userSessions = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           start: doc.data().start.toDate(),
@@ -37,7 +33,8 @@ const SleepSessionList = () => {
           endString: formatString(doc.data().end.toDate()),
         }));
         setSessions(userSessions);
-      });
+      }
+    );
 
     return () => {
       getSessions();

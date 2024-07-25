@@ -1,5 +1,6 @@
-import { React, useState, useEffect }from "react";
+import { React, useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { doc, onSnapshot, collection } from "firebase/firestore";
 
 import { auth, db } from "../../../firebase/config";
 import ItemImages from "../../../components/ItemImages";
@@ -8,7 +9,7 @@ import ItemButton from "./ItemButton";
 const Item = (props) => {
   const [isBought, setisBought] = useState(false);
   const [isEquipped, setisEquipped] = useState(false);
-  
+
   const user = auth.currentUser;
   const uid = user.uid;
 
@@ -16,16 +17,16 @@ const Item = (props) => {
     if (uid) {
       console.log(`Setting up Firestore listener for ${props.name}`);
 
-      const shopRef = db.collection("users").doc(uid).collection("shop");
-      const shopItemDoc = shopRef.doc(props.itemKey);
+      const shopItemDoc = doc(db, "users", uid, "shop", props.itemKey);
 
-      const unsubscribe = shopItemDoc.onSnapshot(
+      const unsubscribe = onSnapshot(
+        shopItemDoc,
         (shopItemDoc) => {
           const itemData = shopItemDoc.data();
-          if (itemData) { 
+          if (itemData) {
             const newIsBought = itemData.isBought;
             const newIsEquipped = itemData.isEquipped;
-            
+
             setisBought(newIsBought);
             setisEquipped(newIsEquipped);
 
@@ -53,9 +54,13 @@ const Item = (props) => {
         <Text style={styles.largeText}>{props.name}</Text>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={itemImage} style={{width: 150, height: 150}} resizeMode="contain" />
+        <Image
+          source={itemImage}
+          style={{ width: 150, height: 150 }}
+          resizeMode="contain"
+        />
       </View>
-      <ItemButton 
+      <ItemButton
         name={props.name}
         points={props.points}
         isBought={isBought}
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   imageContainer: {
-    flex: 1, 
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },

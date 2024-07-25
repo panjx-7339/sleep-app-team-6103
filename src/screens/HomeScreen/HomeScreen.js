@@ -1,6 +1,13 @@
 import { StyleSheet, ImageBackground, View, Text } from "react-native";
 import { React, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 import Cat from "./components/Cat";
 import TopBar from "./components/TopBar";
@@ -15,28 +22,18 @@ const HomeScreen = () => {
   const user = auth.currentUser;
   const uid = user.uid;
 
-  const userSessionsRef = db
-    .collection("users")
-    .doc(uid)
-    .collection("sessions");
-  const userDocRef = db.collection("users").doc(uid);
-
   const [sessions, setSessions] = useState();
   const [goal, setGoal] = useState();
   const [isSleeping, setIsSleeping] = useState();
 
   useEffect(() => {
     if (!uid) return;
+    const userSessionsRef = collection(db, "users", uid, "sessions");
+    const userDocRef = doc(db, "users", uid);
 
-    const userSessionsRef = db
-      .collection("users")
-      .doc(uid)
-      .collection("sessions");
-    const userDocRef = db.collection("users").doc(uid);
-
-    const getSessions = userSessionsRef
-      .orderBy("start", "desc")
-      .onSnapshot((querySnapshot) => {
+    const getSessions = onSnapshot(
+      query(userSessionsRef, orderBy("start", "desc")),
+      (querySnapshot) => {
         const userSessions = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           start: doc.data().start.toDate(),
@@ -44,10 +41,11 @@ const HomeScreen = () => {
           durationInHours: doc.data().durationInHours,
         }));
         setSessions(userSessions);
-      });
+      }
+    );
 
-    const getData = userDocRef.onSnapshot((doc) => {
-      if (doc.exists) {
+    const getData = onSnapshot(userDocRef, (doc) => {
+      if (doc.exists()) {
         const userData = doc.data();
         setGoal(userData.sleepGoal);
         setIsSleeping(userData.isSleeping);
@@ -81,7 +79,7 @@ const HomeScreen = () => {
             </View>
             <View style={styles.catContainer}>
               <View style={styles.catItem}>
-                <FloorItem name="Bed" width={290} height={160} />  
+                <FloorItem name="Bed" width={290} height={160} />
               </View>
               <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
             </View>
@@ -131,21 +129,21 @@ const styles = StyleSheet.create({
   },
   catContainer: {
     flex: 3,
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
     zIndex: 1,
-    paddingBottom: "20%"
-  }, 
+    paddingBottom: "20%",
+  },
   catItem: {
-    position: "absolute", 
+    position: "absolute",
     bottom: "0%",
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
   },
   itemsContainer: {
     flex: 3,
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: "5%"
+    marginBottom: "5%",
   },
 });
