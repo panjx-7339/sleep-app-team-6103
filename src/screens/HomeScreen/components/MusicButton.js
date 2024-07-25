@@ -45,6 +45,7 @@ const MusicButton = () => {
       ? () => {
           console.log('Unloading Sound');
           sound.unloadAsync();
+          setSound();
         }
       : undefined;
   }, [sound]);
