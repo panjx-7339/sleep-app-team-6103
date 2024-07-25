@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^8.0.1",
-    "@react-native/babel-preset": "^0.74.85",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@types/react": "~18.2.79",
