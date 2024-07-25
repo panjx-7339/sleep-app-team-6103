@@ -1,6 +1,7 @@
-import { React, useState }from "react";
+import { React, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
 import { auth, db } from "../../../firebase/config";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 const ItemButton = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -8,31 +9,29 @@ const ItemButton = (props) => {
   const itemPoints = props.points;
   const itemName = props.name;
   const isBought = props.isBought;
-  const isEquipped = props.isEquipped
+  const isEquipped = props.isEquipped;
 
   const user = auth.currentUser;
   const uid = user.uid;
-  
-  const userDocRef = db.collection("users").doc(uid);
-  const itemDocRef = userDocRef.collection("shop").doc(itemName);
+
+  const itemDocRef = doc(db, "users", uid, "shop", itemName);
 
   const handleEquipItem = async () => {
     try {
       if (uid) {
         // update item as equipped
-        await itemDocRef
-          .update({
-            isEquipped: true,
-          })
+        await updateDoc(itemDocRef, {
+          isEquipped: true,
+        })
           .then(() => {
-            alert(`${itemName} successfully equipped!`)
+            alert(`${itemName} successfully equipped!`);
           })
           .catch((error) => {
             console.error("Error equipping", itemName, error);
           });
       }
-  } catch (error) {
-    console.log("Error equipping item: ", error);
+    } catch (error) {
+      console.log("Error equipping item: ", error);
     }
   };
 
@@ -40,19 +39,18 @@ const ItemButton = (props) => {
     try {
       if (uid) {
         // update item as unequipped
-        await itemDocRef
-          .update({
-            isEquipped: false,
-          })
+        await updateDoc(itemDocRef, {
+          isEquipped: false,
+        })
           .then(() => {
-            alert(`${itemName} successfully unequipped!`)
+            alert(`${itemName} successfully unequipped!`);
           })
           .catch((error) => {
             console.error("Error unequipping", itemName, error);
           });
       }
-  } catch (error) {
-    console.log("Error unequipping item: ", error);
+    } catch (error) {
+      console.log("Error unequipping item: ", error);
     }
   };
 
@@ -60,31 +58,29 @@ const ItemButton = (props) => {
   const handleBuyItem = async () => {
     try {
       if (uid) {
-        const userDocRef = db.collection("users").doc(uid);
-        
+        const userDocRef = doc(db, "users", uid);
+
         // Get current points of user
-        const userDoc = await userDocRef.get();
+        const userDoc = await getDoc(userDocRef);
         const userPoints = userDoc.data().points;
 
         if (userPoints >= itemPoints) {
           // Deduct points
           const updatedPoints = userPoints - itemPoints;
-          await userDocRef
-            .update({
-              points: updatedPoints,
-            })
+          await updateDoc(userDocRef, {
+            points: updatedPoints,
+          })
             .then(console.log("Points successfully updated for", itemName))
             .catch((error) => {
               console.error("Error updating points for", itemName, error);
             });
 
           // Update item as bought
-          await itemDocRef
-            .update({
-              isBought: true,
-            })
+          await updateDoc(itemDocRef, {
+            isBought: true,
+          })
             .then(() => {
-              alert(`${itemName} successfully bought!`)
+              alert(`${itemName} successfully bought!`);
             })
             .catch((error) => {
               console.error("Error buying", itemName, error);
@@ -99,24 +95,22 @@ const ItemButton = (props) => {
       setModalVisible(!modalVisible);
     }
   };
-  
+
   let buttonText;
   let onPressHandler;
   let buttonStyle;
 
   if (isBought && isEquipped) {
-    buttonText = 'Unequip';
+    buttonText = "Unequip";
     onPressHandler = handleUnequipItem;
-    buttonStyle = [styles.button, {backgroundColor: "#FFA077"}];
-  }
-  else if (isBought) {
-    buttonText = 'Equip';
+    buttonStyle = [styles.button, { backgroundColor: "#FFA077" }];
+  } else if (isBought) {
+    buttonText = "Equip";
     onPressHandler = handleEquipItem;
-    buttonStyle = [styles.button, {backgroundColor: "#FFCA28"}];
-  }
-  else {
+    buttonStyle = [styles.button, { backgroundColor: "#FFCA28" }];
+  } else {
     buttonText = `${itemPoints} points`;
-    onPressHandler = () => setModalVisible(true); 
+    onPressHandler = () => setModalVisible(true);
     buttonStyle = styles.button;
   }
 
@@ -135,7 +129,7 @@ const ItemButton = (props) => {
             <Text style={[styles.text, { color: "#fff" }]}>
               Do you wish to purchase {itemName}?
             </Text>
-          
+
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: "lightcoral" }]}
@@ -156,11 +150,11 @@ const ItemButton = (props) => {
       </Modal>
 
       <TouchableOpacity style={buttonStyle} onPress={onPressHandler}>
-          <Text style={styles.smallText}>{buttonText}</Text>
+        <Text style={styles.smallText}>{buttonText}</Text>
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 export default ItemButton;
 
@@ -197,7 +191,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    padding: "5%"
+    padding: "5%",
   },
   modalButton: {
     borderRadius: 20,

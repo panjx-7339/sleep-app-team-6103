@@ -3,24 +3,18 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase/config";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { doc, deleteDoc, collection } from "firebase/firestore";
 
 const DeleteButton = (props) => {
-  const [uid, setUid] = useState();
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-      }
-    });
-  }, []);
-  const userSessionsRef = db
-    .collection("users")
-    .doc(uid)
-    .collection("sessions");
+  const user = auth.currentUser;
+  const uid = user.uid;
+
+  const userSessionsRef = collection(db, "users", uid, "sessions");
 
   const icon = <AntDesign name="delete" size={24} color="white" />;
   const handlePress = async () => {
-    await userSessionsRef.doc(props.sessId).delete();
+    const sessionDocRef = doc(userSessionsRef, props.sessId);
+    await deleteDoc(sessionDocRef);
   };
   return (
     <View>

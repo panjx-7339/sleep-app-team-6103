@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
 
 import { auth, db } from "../../../firebase/config";
 
@@ -12,8 +13,8 @@ const PointsDisplay = () => {
 
   useEffect(() => {
     if (uid) {
-      const userDocRef = db.collection("users").doc(uid);
-      const unsubscribe = userDocRef.onSnapshot((doc) => {
+      const userDocRef = doc(db, "users", uid);
+      const unsubscribe = onSnapshot(userDocRef, (doc) => {
         let points = doc.data().points;
         console.log("Points:", points);
         setPoints(points);

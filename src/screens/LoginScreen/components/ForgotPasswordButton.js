@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { sendPasswordResetEmail } from "firebase/auth";
+
 import { auth } from "../../../firebase/config";
 
 const ForgotPasswordButton = (props) => {
@@ -8,8 +10,7 @@ const ForgotPasswordButton = (props) => {
       alert("Please enter your email address.");
       return;
     }
-    auth
-      .sendPasswordResetEmail(props.email)
+    sendPasswordResetEmail(auth, props.email)
       .then(() => {
         alert("Password reset email has been sent.");
       })
