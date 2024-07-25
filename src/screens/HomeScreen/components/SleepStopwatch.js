@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Stopwatch } from "react-native-stopwatch-timer";
 import { FontAwesome } from "@expo/vector-icons";
 import { auth, db } from "../../../firebase/config";
+import { collection, doc, addDoc, updateDoc, getDoc } from "firebase/firestore";
 
 const SleepStopwatch = () => {
   const [startTime, setStartTime] = useState(null);
@@ -25,11 +26,8 @@ const SleepStopwatch = () => {
   const user = auth.currentUser;
   const uid = user.uid;
 
-  const userSessionsRef = db
-    .collection("users")
-    .doc(uid)
-    .collection("sessions");
-  const userDocRef = db.collection("users").doc(uid);
+  const userSessionsRef = collection(db, "users", uid, "sessions");
+  const userDocRef = doc(db, "users", uid);
 
   const addSession = async (start, end) => {
     const durationInHours = (end - start) / (1000 * 60 * 60);
@@ -40,7 +38,7 @@ const SleepStopwatch = () => {
       alert("Sleep Session cannot be longer than 24 hours.");
       return;
     }
-    const userDoc = await userDocRef.get();
+    const userDoc = await getDoc(userDocRef);
     const userData = userDoc.data();
     const goal = userData.sleepGoal;
 
@@ -48,7 +46,7 @@ const SleepStopwatch = () => {
     points = durationInHours >= goal ? 15 : 5;
     const metGoal = durationInHours >= goal;
 
-    const docRef = await userSessionsRef.add({
+    const docRef = await addDoc(userSessionsRef, {
       start: start,
       end: end,
       durationInHours: durationInHours,
@@ -58,10 +56,9 @@ const SleepStopwatch = () => {
 
     const currentPoints = userData.points;
     const updatedPoints = currentPoints + points;
-    await userDocRef
-      .update({
-        points: updatedPoints,
-      })
+    await updateDoc(userDocRef, {
+      points: updatedPoints,
+    })
       .then(() => {
         console.log("Points successfully updated!");
       })
@@ -78,7 +75,7 @@ const SleepStopwatch = () => {
       setEndTime(new Date());
       setIsRunning(false);
       setReset(true);
-      const update = await userDocRef.update({
+      await updateDoc(userDocRef, {
         isSleeping: false,
       });
 
@@ -87,7 +84,7 @@ const SleepStopwatch = () => {
       //press start - set start, toggle cat sleeping
       setIsRunning(true);
       setStartTime(new Date());
-      const update = await userDocRef.update({
+      await updateDoc(userDocRef, {
         isSleeping: true,
       });
     }

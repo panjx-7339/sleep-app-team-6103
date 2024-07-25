@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "../../firebase/config";
 import Logo from "../../components/Logo";
@@ -17,14 +18,12 @@ const LoginScreen = () => {
 
   //auth listener
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("signed in");
         navigation.navigate("Home");
-      } else {
-        console.log("signed out");
       }
     });
+
     return unsubscribe;
   }, []);
 

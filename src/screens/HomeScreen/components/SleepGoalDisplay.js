@@ -9,6 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { React, useState, useEffect } from "react";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 
 import { auth, db } from "../../../firebase/config";
 
@@ -22,8 +23,9 @@ const SleepGoalDisplay = () => {
 
   useEffect(() => {
     if (uid) {
-      const userDocRef = db.collection("users").doc(uid);
-      const unsubscribe = userDocRef.onSnapshot(
+      const userDocRef = doc(db, "users", uid);
+      const unsubscribe = onSnapshot(
+        userDocRef,
         (doc) => {
           const data = doc.data();
           if (data) {
@@ -51,7 +53,7 @@ const SleepGoalDisplay = () => {
           alert("Sleep goal cannot exceed 24 hours.");
           return;
         }
-        await db.collection("users").doc(uid).update({
+        await updateDoc(doc(db, "users", uid), {
           sleepGoal: userInput,
         });
         console.log("Sleep goal updated for user ID: ", uid);

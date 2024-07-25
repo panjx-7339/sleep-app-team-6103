@@ -1,5 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 import { auth, db } from "../../firebase/config";
 import Graph from "./components/Graph";
@@ -9,21 +16,8 @@ import BasicStats from "./components/BasicStats";
 import Prediction from "./components/Prediction";
 
 const StatsScreen = () => {
-  const [uid, setUid] = useState();
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-      }
-    });
-    return unsubscribe;
-  }, []);
-
-  const userSessionsRef = db
-    .collection("users")
-    .doc(uid)
-    .collection("sessions");
-  const userDocRef = db.collection("users").doc(uid);
+  const user = auth.currentUser;
+  const uid = user.uid;
 
   const [sessions, setSessions] = useState();
   const [goal, setGoal] = useState();
@@ -31,15 +25,12 @@ const StatsScreen = () => {
   useEffect(() => {
     if (!uid) return;
 
-    const userSessionsRef = db
-      .collection("users")
-      .doc(uid)
-      .collection("sessions");
-    const userDocRef = db.collection("users").doc(uid);
+    const userSessionsRef = collection(db, "users", uid, "sessions");
+    const userDocRef = doc(db, "users", uid);
 
-    const getSessions = userSessionsRef
-      .orderBy("start", "desc")
-      .onSnapshot((querySnapshot) => {
+    const getSessions = onSnapshot(
+      query(userSessionsRef, orderBy("start", "desc")),
+      (querySnapshot) => {
         const userSessions = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           start: doc.data().start.toDate(),
@@ -47,9 +38,10 @@ const StatsScreen = () => {
           durationInHours: doc.data().durationInHours,
         }));
         setSessions(userSessions);
-      });
+      }
+    );
 
-    const getGoal = userDocRef.onSnapshot((doc) => {
+    const getGoal = onSnapshot(userDocRef, (doc) => {
       if (doc.exists) {
         const userData = doc.data();
         setGoal(userData.sleepGoal);
