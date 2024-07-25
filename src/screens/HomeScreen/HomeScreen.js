@@ -13,6 +13,7 @@ import Cat from "./components/Cat";
 import TopBar from "./components/TopBar";
 import Lights from "./components/items/Lights";
 import FloorItem from "./components/items/FloorItem";
+import MusicButton from "./components/MusicButton";
 import NavigationTab from "../../components/NavigationTab/NavigationTab";
 import { auth, db } from "../../firebase/config";
 import SleepStopwatch from "./components/SleepStopwatch";
@@ -69,6 +70,9 @@ const HomeScreen = () => {
             <TopBar />
             <View style={styles.stopwatchContainer}>
               <SleepStopwatch />
+              <View className="absolute top-0 right-8 mt-4"> 
+                <MusicButton />
+              </View>
             </View>
             <View style={styles.lightsContainer}>
               <Lights />
@@ -80,8 +84,8 @@ const HomeScreen = () => {
               <Cat sessions={sessions} goal={goal} isSleeping={isSleeping} />
             </View>
             <View style={styles.itemsContainer}>
-              <FloorItem name="Bowl" width={150} height={200} />
-              <FloorItem name="Mouse Toy" width={150} height={200} />
+              <FloorItem name="Bowl" width={150} height={150} />
+              <FloorItem name="Mouse Toy" width={150} height={150}/>
             </View>
             <NavigationTab />
           </View>
@@ -110,15 +114,18 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   stopwatchContainer: {
-    flex: 1,
+    flex: 2,
     marginTop: "10%",
     zIndex: 5,
+    flexDirection: "row",
+    justifyContent: "center", 
+    alignItems: "center", 
+    //backgroundColor: "pink"
   },
   lightsContainer: {
     flex: 1,
     justifyContent: "center",
     zIndex: 0,
-    //backgroundColor: "red"
   },
   catContainer: {
     flex: 3,
