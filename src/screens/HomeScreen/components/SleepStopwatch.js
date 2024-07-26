@@ -43,7 +43,7 @@ const SleepStopwatch = () => {
     const goal = userData.sleepGoal;
 
     let points = 0;
-    points = durationInHours >= goal ? 15 : 5;
+    points = durationInHours >= goal ? 15 : durationInHours >= 0.05 ? 5 : 0;
     const metGoal = durationInHours >= goal;
 
     const docRef = await addDoc(userSessionsRef, {

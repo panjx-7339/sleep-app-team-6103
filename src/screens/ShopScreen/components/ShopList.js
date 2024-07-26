@@ -31,6 +31,7 @@ const ShopList = () => {
       {items &&
         Object.keys(items).map((key) => (
           <Item
+            key={key}
             itemKey={key}
             name={items[key].name}
             points={items[key].points}
