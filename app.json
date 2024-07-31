@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/app-logo.png",
+        "foregroundImage": "./assets/android-logo.png",
         "backgroundColor": "#323258"
       },
       "package": "com.sleepapp6103"

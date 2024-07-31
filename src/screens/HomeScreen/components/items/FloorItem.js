@@ -20,23 +20,20 @@ const FloorItem = (props) => {
       const shopRef = collection(db, "users", uid, "shop");
       const shopItemDoc = doc(shopRef, itemName);
 
-      const unsubscribe = onSnapshot(
-        shopItemDoc,
-        (doc) => {
-          if (doc.exists) {
+      const unsubscribe = onSnapshot(shopItemDoc, (doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          if (data) {
             const itemIsEquipped = doc.data().isEquipped;
             console.log(
               `${itemName} is equipped on home screen: ${itemIsEquipped}`
             );
             setIsEquipped(itemIsEquipped);
-          } else {
-            console.error(`${itemName} document does not exist`);
           }
-        },
-        (error) => {
-          console.error("Error fetching document: ", error);
+        } else {
+          console.error(`${itemName} document does not exist`);
         }
-      );
+      });
       return () => unsubscribe();
     }
   }, [uid, itemName]);

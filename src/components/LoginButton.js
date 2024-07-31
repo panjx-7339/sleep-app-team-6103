@@ -55,17 +55,15 @@ const LoginButton = (props) => {
       };
 
       await setDoc(doc(db, "users", userCredential.user.uid), userInfo);
-      navigation.navigate("Home");
-
       const userShopRef = collection(
         db,
         "users",
         userCredential.user.uid,
         "shop"
       );
-      Object.entries(ShopItems).forEach(([name, item]) => {
+      const shopPromises = Object.entries(ShopItems).map(([name, item]) => {
         const shopDocRef = doc(userShopRef, name);
-        setDoc(shopDocRef, item)
+        return setDoc(shopDocRef, item)
           .then(() => {
             console.log("Document successfully written for: ", name);
           })
@@ -73,6 +71,9 @@ const LoginButton = (props) => {
             console.error("Error adding document for: ", name, error);
           });
       });
+      await Promise.all(shopPromises);
+
+      navigation.navigate("Home");
     } catch (error) {
       switch (error.code) {
         case "auth/invalid-email":
