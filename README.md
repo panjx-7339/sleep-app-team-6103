@@ -1,5 +1,3 @@
-# sleep-app-team-6103
-
 # 1. About DreamCat
 
 Getting a consistent and sufficient amount of sleep is vital to maintaining a healthy lifestyle, so it is important for individuals to be aware of their sleeping habits to make conscious efforts to improve them.
